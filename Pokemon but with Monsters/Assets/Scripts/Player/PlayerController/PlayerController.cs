@@ -38,12 +38,34 @@ public class PlayerController : MonoBehaviour
     [Header("Interact")]
     public float interactRayDst = 1.0f;
 
-    [Header("Cinemachine Camera's")]
+    [Header("Leaning")]
+    public float leanAngle = 20f;
+    public float leanSpeed = 10f;
+
+    [Header("Crouching")]
+    public float crouchHeight = 0.5f;
+    public float crouchSpeed = 10f;
+
+    [Header("Inventory")]
+    public List<InventorySlot> invSlots;
+
+    public Transform holdingHand;
+
+    /*[Header("Cinemachine Camera's")]*/
 
     //Privates
     private Rigidbody rb;
     private float speed;
+    private float currentLeanAngle = 0f;
+    private float targetLeanAngle = 0f;
+    private float leanInput = 0f;
+    private float standingHeight = 0f;
+    private float targetHeight = 0f;
     public RaycastHit hit;
+    private bool isCrouching = false;
+    private bool isLookingAtInteractable = false;
+    [HideInInspector] public GameObject equippedItem;
+    [HideInInspector] public Item currentItem;
     [HideInInspector] public bool isGrounded;
     [HideInInspector] public bool isWalking;
     [HideInInspector] public bool isRunning;
@@ -90,6 +112,37 @@ public class PlayerController : MonoBehaviour
 
         UpdateCamera();
 
+        if(playerControlData.canLean && !isLookingAtInteractable)
+        {
+            if (Input.GetKey(KeyCode.Q))
+            {
+                leanInput = 1f;
+
+                Lean();
+            }
+            else if (Input.GetKey(KeyCode.E))
+            {
+                leanInput = -1f;
+
+                Lean();
+            }
+            else if(Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.E))
+            {
+                leanInput = 0f;
+
+                switch(playerControlData.type.camType)
+                {
+                    case ControllerData.Type.CamType.UnityStandard:
+                        cam.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                        break;
+
+                    case ControllerData.Type.CamType.Cinemachine:
+                        cmCam.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
+                        break;
+                }
+            }
+        }
+
         if (playerControlData.lockMouseInEditor)
         {
             Cursor.lockState = CursorLockMode.Locked;
@@ -98,10 +151,12 @@ public class PlayerController : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
         }
+        
+        Interact();
 
-        if (Input.GetButtonDown(playerControlData.interact))
+        if(playerControlData.canCrouch)
         {
-            Interact();
+            Crouch();
         }
     }
 
@@ -109,7 +164,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerControlData.detectCollision)
         {
-            if (collision.gameObject.tag == playerControlData.groundTag)
+            if (collision.gameObject.CompareTag(playerControlData.groundTag))
             {
                 isGrounded = true;
             }
@@ -120,7 +175,7 @@ public class PlayerController : MonoBehaviour
     {
         if (playerControlData.detectCollision)
         {
-            if (collision.gameObject.tag == playerControlData.groundTag)
+            if (collision.gameObject.CompareTag(playerControlData.groundTag))
             {
                 isGrounded = false;
             }
@@ -228,16 +283,134 @@ public class PlayerController : MonoBehaviour
                             cam.Rotate(-mouseY * sensitivity * Time.fixedDeltaTime);
                         }
                         break;
+
+                    case ControllerData.Type.CamType.Cinemachine:
+                        if (playerControlData.canLookLeftAndRight)
+                        {
+                            Vector3 mouseX = new Vector3(0, Input.GetAxis("Mouse X"), 0);
+
+                            transform.Rotate((mouseX * sensitivity * Time.fixedDeltaTime));
+                        }
+
+                        if (playerControlData.canLookUpAndDown)
+                        {
+                            Vector3 mouseY = new Vector3(Input.GetAxis("Mouse Y"), 0, 0);
+
+                            if (playerControlData.camClamped)
+                            {
+                                print("Fucking stop dying");
+                            }
+
+                            cmCam.transform.Rotate(-mouseY * sensitivity * Time.fixedDeltaTime);
+                        }
+                        break;
                 }
+                break;
+        }
+    }
+
+    public void Lean()
+    {
+        switch (playerControlData.type.camType)
+        {
+            case ControllerData.Type.CamType.UnityStandard:
+                targetLeanAngle = leanInput * leanAngle;
+
+                currentLeanAngle = Mathf.Lerp(currentLeanAngle, targetLeanAngle, Time.deltaTime * leanSpeed);
+
+                cam.localRotation = Quaternion.Euler(0f, 0f, currentLeanAngle);
+                break;
+
+            case ControllerData.Type.CamType.Cinemachine:
+                targetLeanAngle = leanInput * leanAngle;
+
+                currentLeanAngle = Mathf.Lerp(currentLeanAngle, targetLeanAngle, Time.deltaTime * leanSpeed);
+
+                cmCam.transform.localRotation = Quaternion.Euler(0f, 0f, currentLeanAngle);
+                break;
+        }
+    }
+
+    public void Crouch()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            isCrouching = !isCrouching;
+
+            if (isCrouching)
+            {
+                targetHeight = crouchHeight;
+            }
+            else
+            {
+                targetHeight = standingHeight;
+            }
+        }
+
+        float newHeight = Mathf.Lerp(transform.localScale.y, targetHeight, Time.deltaTime * crouchSpeed);
+        transform.localScale = new Vector3(transform.localScale.x, newHeight, transform.localScale.z);
+
+        float moveAmount = Mathf.Abs(Input.GetAxis("Horizontal")) + Mathf.Abs(Input.GetAxis("Vertical"));
+        float cameraOffset = moveAmount * 0.05f;
+
+        Vector3 newCameraPosition;
+
+        switch (playerControlData.type.camType)
+        {
+            case ControllerData.Type.CamType.UnityStandard:
+                newCameraPosition = cam.localPosition;
+
+                newCameraPosition.z = -cameraOffset;
+                cam.localPosition = newCameraPosition;
+                break;
+
+            case ControllerData.Type.CamType.Cinemachine:
+                newCameraPosition = cmCam.transform.localPosition;
+
+                newCameraPosition.z = -cameraOffset;
+                cmCam.transform.localPosition = newCameraPosition;
                 break;
         }
     }
 
     public void Interact()
     {
-        if (Input.GetButtonDown(playerControlData.interact))
+        switch (playerControlData.type.camType)
         {
+            case ControllerData.Type.CamType.UnityStandard:
+                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10.0f))
+                {
 
+                }
+                break;
+
+            case ControllerData.Type.CamType.Cinemachine:
+                if (Physics.Raycast(cmCam.transform.position, cmCam.transform.forward, out hit, 10.0f))
+                {
+                    if (hit.transform.gameObject.CompareTag("Item"))
+                    {
+                        isLookingAtInteractable = true;
+                        print("kijk je hebt links, je hebt rechts, en soms heb je kaas");
+
+                        if (Input.GetButtonDown(playerControlData.interact))
+                        {
+                            for (int i = 0; i < invSlots.Count; i++)
+                            {
+                                if (invSlots[i].currentItem == null)
+                                {
+                                    invSlots[i].AddItem(hit.collider.GetComponent<ItemRef>().item);
+
+                                    Destroy(hit.collider.gameObject);
+                                    break;
+                                }
+                            }
+                        }
+                    }else
+                    {
+                        isLookingAtInteractable = false;
+                    }
+                }
+                break;
         }
     }
 
@@ -269,11 +442,17 @@ public class PlayerController : MonoBehaviour
             if (playerControlData.type.cinemachineMode == ControllerData.Type.CinemachineType.VirtualCam)
             {
                 cmCam.gameObject.SetActive(true);
+                cmCam.Priority = 10;
+
+                cmFreeLookCam.Priority = 0;
                 cmFreeLookCam.gameObject.SetActive(false);
             }
             else if (playerControlData.type.cinemachineMode == ControllerData.Type.CinemachineType.FreeLookCam)
             {
                 cmFreeLookCam.gameObject.SetActive(true);
+                cmFreeLookCam.Priority = 10;
+
+                cmCam.Priority = 0;
                 cmCam.gameObject.SetActive(false);
             }
             else
@@ -289,7 +468,7 @@ public class PlayerController : MonoBehaviour
         {
             cam.SetParent(this.transform);
 
-            cam.localPosition = new Vector3(0, .5f, .2f);
+            cam.localPosition = new Vector3(0, .5f, .25f);
         }
 
         speed = walkSpeed;
@@ -299,5 +478,8 @@ public class PlayerController : MonoBehaviour
         isGrounded = true;
 
         moveType = MoveType.Idle;
+
+        standingHeight = transform.localScale.y;
+        targetHeight = standingHeight;
     }
 }

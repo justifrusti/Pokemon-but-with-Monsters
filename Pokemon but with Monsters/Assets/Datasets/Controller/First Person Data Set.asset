@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: First Person Data Set
   m_EditorClassIdentifier: 
   type:
-    camType: 0
+    camType: 1
     cinemachineMode: 0
     controlMode: 1
   canWalk: 1
@@ -21,6 +21,7 @@ MonoBehaviour:
   canJump: 1
   canInteract: 1
   canLean: 1
+  canCrouch: 1
   canLookLeftAndRight: 1
   canLookUpAndDown: 1
   camClamped: 0

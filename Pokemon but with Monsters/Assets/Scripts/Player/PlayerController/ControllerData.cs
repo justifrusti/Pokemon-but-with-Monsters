@@ -39,6 +39,7 @@ public class ControllerData : ScriptableObject
     public bool canJump;
     public bool canInteract;
     public bool canLean;
+    public bool canCrouch;
     public bool canLookLeftAndRight;
     public bool canLookUpAndDown;
     [Space]
