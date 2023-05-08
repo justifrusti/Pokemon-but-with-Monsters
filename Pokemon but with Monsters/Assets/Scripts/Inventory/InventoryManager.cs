@@ -68,6 +68,12 @@ public class InventoryManager : MonoBehaviour
 
     public void MoveItem(InventorySlot inventorySlot)
     {
+        if (manager.pc.equippedItem != null)
+        {
+            Destroy(manager.pc.equippedItem);
+            manager.pc.currentItem = null;
+        }
+
         if (inventorySlot.currentItem != null && hand.currentItem == null)
         {
             hand.AddItem(inventorySlot.currentItem);
