@@ -20,7 +20,7 @@ MonoBehaviour:
   canSprint: 1
   canJump: 1
   canInteract: 1
-  canLean: 1
+  canLean: 0
   canCrouch: 1
   canLookLeftAndRight: 1
   canLookUpAndDown: 1

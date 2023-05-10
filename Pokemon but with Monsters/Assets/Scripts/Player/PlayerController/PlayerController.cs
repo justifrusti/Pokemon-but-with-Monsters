@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     private float leanInput = 0f;
     private float standingHeight = 0f;
     private float targetHeight = 0f;
+    private float camXRot;
     public RaycastHit hit;
     private bool isCrouching = false;
     private bool isLookingAtInteractable = false;
@@ -110,8 +111,6 @@ public class PlayerController : MonoBehaviour
     {
         CheckSpeed();
 
-        UpdateCamera();
-
         if(playerControlData.canLean && !isLookingAtInteractable)
         {
             if (Input.GetKey(KeyCode.Q))
@@ -126,20 +125,11 @@ public class PlayerController : MonoBehaviour
 
                 Lean();
             }
-            else if(Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.E))
+            else
             {
                 leanInput = 0f;
 
-                switch(playerControlData.type.camType)
-                {
-                    case ControllerData.Type.CamType.UnityStandard:
-                        cam.localRotation = Quaternion.Euler(0f, 0f, 0f);
-                        break;
-
-                    case ControllerData.Type.CamType.Cinemachine:
-                        cmCam.transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
-                        break;
-                }
+                Lean();
             }
         }
 
@@ -151,7 +141,9 @@ public class PlayerController : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.None;
         }
-        
+
+        UpdateCamera();
+
         Interact();
 
         if(playerControlData.canCrouch)
@@ -280,7 +272,7 @@ public class PlayerController : MonoBehaviour
                                 print("Fucking stop dying");
                             }
 
-                            cam.Rotate(-mouseY * sensitivity * Time.fixedDeltaTime);
+                            cam.transform.Rotate(-mouseY * sensitivity * Time.fixedDeltaTime);
                         }
                         break;
 
@@ -318,7 +310,7 @@ public class PlayerController : MonoBehaviour
 
                 currentLeanAngle = Mathf.Lerp(currentLeanAngle, targetLeanAngle, Time.deltaTime * leanSpeed);
 
-                cam.localRotation = Quaternion.Euler(0f, 0f, currentLeanAngle);
+                cam.localRotation = Quaternion.Euler(0, 0, currentLeanAngle);
                 break;
 
             case ControllerData.Type.CamType.Cinemachine:
@@ -326,7 +318,7 @@ public class PlayerController : MonoBehaviour
 
                 currentLeanAngle = Mathf.Lerp(currentLeanAngle, targetLeanAngle, Time.deltaTime * leanSpeed);
 
-                cmCam.transform.localRotation = Quaternion.Euler(0f, 0f, currentLeanAngle);
+                cmCam.transform.localRotation = Quaternion.Euler(0, 0, currentLeanAngle);
                 break;
         }
     }
@@ -380,7 +372,29 @@ public class PlayerController : MonoBehaviour
             case ControllerData.Type.CamType.UnityStandard:
                 if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10.0f))
                 {
+                    if (hit.transform.gameObject.CompareTag("Item"))
+                    {
+                        isLookingAtInteractable = true;
+                        print("Press 'E' to Pickup");
 
+                        if (Input.GetButtonDown(playerControlData.interact))
+                        {
+                            for (int i = 0; i < invSlots.Count; i++)
+                            {
+                                if (invSlots[i].currentItem == null)
+                                {
+                                    invSlots[i].AddItem(hit.collider.GetComponent<ItemRef>().item);
+
+                                    Destroy(hit.collider.gameObject);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        isLookingAtInteractable = false;
+                    }
                 }
                 break;
 
@@ -390,7 +404,7 @@ public class PlayerController : MonoBehaviour
                     if (hit.transform.gameObject.CompareTag("Item"))
                     {
                         isLookingAtInteractable = true;
-                        print("kijk je hebt links, je hebt rechts, en soms heb je kaas");
+                        print("Press 'E' to Pickup");
 
                         if (Input.GetButtonDown(playerControlData.interact))
                         {

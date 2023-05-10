@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,6 +41,8 @@ public class InventoryManager : MonoBehaviour
         {
             if(hand.gameObject.activeInHierarchy)
             {
+                DropItem();
+
                 hand.gameObject.SetActive(false);
             }
 
@@ -47,6 +50,11 @@ public class InventoryManager : MonoBehaviour
             {
                 controllData.lockMouseInEditor = true;
             }
+        }
+
+        if(moveMode && hand.currentItem != null && Input.GetButtonDown("RMB"))
+        {
+            DropItem();
         }
 
         if(Input.GetKeyDown(KeyCode.Tab))
@@ -101,7 +109,7 @@ public class InventoryManager : MonoBehaviour
 
     public void DropItem()
     {
-        if (hand.currentItem != null && moveMode)
+        if (hand.currentItem != null)
         {
             currentInvItem = hand.currentItem.itemObj;
 

@@ -17,15 +17,13 @@ public class DungeonGenerator : MonoBehaviour
     public int startPos = 0;
     public int maxItterations = 10000;
     private int currentRooms;
-    public int maxRooms;
 
+    public RuleSet finishRoom;
     public List<RuleSet> rooms;
 
     [HideInInspector]public List<GameObject> generatedRooms;
 
     public Vector2 offset;
-
-    [SerializeField]private float[] roomWeights;
 
     List<Cell> board;
 
@@ -56,9 +54,6 @@ public class DungeonGenerator : MonoBehaviour
 
         public Vector2Int minPos, maxPos;
 
-        [Range(0.00f, 1.00f)]
-        public float weight;
-
         public bool mustBeSpawned;
         public bool obligatory;
         public bool isOneTimeUse;
@@ -85,8 +80,6 @@ public class DungeonGenerator : MonoBehaviour
     void Awake()
     {
         generatorPosition = gameObject.transform;
-
-        roomWeights = new float[rooms.Count];
     }
 
     void Start()
@@ -139,7 +132,7 @@ public class DungeonGenerator : MonoBehaviour
                 break;
 
             case GenerationState.Disabled:
-                print ("disable");
+                this.gameObject.GetComponent<DungeonGenerator>().enabled = false;
                 break;
         }
     }
@@ -152,7 +145,7 @@ public class DungeonGenerator : MonoBehaviour
             {
                 Cell currentCell = board[(x + y * size.x)];
 
-                if (currentCell.visited /*&& currentRooms < maxRooms*/)
+                if (currentCell.visited)
                 {
                     int randomRoom = -1;
 
@@ -262,7 +255,7 @@ public class DungeonGenerator : MonoBehaviour
 
             board[currentCell].visited = true;
 
-            if(currentCell == board.Count - 1)
+            if (currentCell == board.Count - 1)
             {
                 break;
             }
@@ -273,7 +266,8 @@ public class DungeonGenerator : MonoBehaviour
             {
                 if (path.Count == 0)
                 {
-                    break;
+                    // If there are no neighbours and no path to backtrack to, we need to start over
+                    currentCell = Random.Range(0, board.Count);
                 }
                 else
                 {
@@ -284,6 +278,24 @@ public class DungeonGenerator : MonoBehaviour
             {
                 path.Push(currentCell);
 
+                // If one of the neighbours is the finish cell, we always choose it
+                if (neighbours.Contains(board.Count - 1))
+                {
+                    currentCell = board.Count - 1;
+                    board[currentCell].visited = true;
+
+                    if (board[currentCell - size.x].visited)
+                    {
+                        board[currentCell].status[up] = true;
+                        board[currentCell - size.x].status[down] = true;
+                    }else if (board[currentCell - 1].visited)
+                    {
+                        board[currentCell].status[left] = true;
+                        board[currentCell - 1].status[right] = true;
+                    }
+                    break;
+                }
+
                 int newCell = neighbours[Random.Range(0, neighbours.Count)];
 
                 if (newCell > currentCell)
@@ -291,15 +303,21 @@ public class DungeonGenerator : MonoBehaviour
                     //Down or Right
                     if (newCell - 1 == currentCell)
                     {
-                        board[currentCell].status[right] = true;
-                        currentCell = newCell;
-                        board[currentCell].status[left] = true;
+                        if (currentCell % size.x != size.x - 1) // Check if currentCell is not on the right edge of the grid
+                        {
+                            board[currentCell].status[right] = true;
+                            currentCell = newCell;
+                            board[currentCell].status[left] = true;
+                        }
                     }
                     else
                     {
-                        board[currentCell].status[down] = true;
-                        currentCell = newCell;
-                        board[currentCell].status[up] = true;
+                        if (currentCell / size.x != size.y - 1) // Check if currentCell is not on the bottom edge of the grid
+                        {
+                            board[currentCell].status[down] = true;
+                            currentCell = newCell;
+                            board[currentCell].status[up] = true;
+                        }
                     }
                 }
                 else
@@ -307,57 +325,29 @@ public class DungeonGenerator : MonoBehaviour
                     //Up or Left
                     if (newCell + 1 == currentCell)
                     {
-                        board[currentCell].status[left] = true;
-                        currentCell = newCell;
-                        board[currentCell].status[right] = true;
+                        if (currentCell % size.x != 0) // Check if currentCell is not on the left edge of the grid
+                        {
+                            board[currentCell].status[left] = true;
+                            currentCell = newCell;
+                            board[currentCell].status[right] = true;
+                        }
                     }
                     else
                     {
-                        board[currentCell].status[up] = true;
-                        currentCell = newCell;
-                        board[currentCell].status[down] = true;
+                        if (currentCell / size.x != 0) // Check if currentCell is not on the top edge of the grid
+                        {
+                            board[currentCell].status[up] = true;
+                            currentCell = newCell;
+                            board[currentCell].status[down] = true;
+                        }
                     }
                 }
             }
         }
 
-        //SpawnWeightedRoom();
         GenerateRooms();
-    }  
-    
-    public void SpawnWeightedRoom()
-    {
-        ResetRoomSpawnWeights();
-
-        float value = Random.value;
-
-        for (int i = 0; i < rooms.Count; i++)
-        {
-            if (value < roomWeights[i])
-            {
-                GenerateRooms();
-                return;
-            }
-
-            value -= roomWeights[i];
-        }
     }
 
-    private void ResetRoomSpawnWeights()
-    {
-        float totalRoomWeight = 0;
-
-        for (int i = 0; i < rooms.Count; i++)
-        {
-            roomWeights[i] = rooms[i].weight;
-            totalRoomWeight += roomWeights[i];
-        }
-
-        for (int i = 0; i < roomWeights.Length; i++)
-        {
-            roomWeights[i] = roomWeights[i] / totalRoomWeight;
-        }
-    }
 
     List<int> CheckNeighbours(int cell)
     {
