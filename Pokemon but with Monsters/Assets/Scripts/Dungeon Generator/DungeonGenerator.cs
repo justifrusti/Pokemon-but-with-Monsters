@@ -127,7 +127,6 @@ public class DungeonGenerator : MonoBehaviour
                 break;
 
             case GenerationState.Finished:
-
                 generationState = GenerationState.Disabled;
                 break;
 
