@@ -266,7 +266,6 @@ public class DungeonGenerator : MonoBehaviour
             {
                 if (path.Count == 0)
                 {
-                    // If there are no neighbours and no path to backtrack to, we need to start over
                     currentCell = Random.Range(0, board.Count);
                 }
                 else
@@ -278,7 +277,6 @@ public class DungeonGenerator : MonoBehaviour
             {
                 path.Push(currentCell);
 
-                // If one of the neighbours is the finish cell, we always choose it
                 if (neighbours.Contains(board.Count - 1))
                 {
                     currentCell = board.Count - 1;
