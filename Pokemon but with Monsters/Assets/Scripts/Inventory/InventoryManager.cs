@@ -62,13 +62,13 @@ public class InventoryManager : MonoBehaviour
             moveMode = !moveMode;
         }
 
-        if(Input.GetKeyDown(KeyCode.Alpha1))
+        if(Input.GetKeyDown(KeyCode.Alpha1) && manager.pc.invSlots[0] != null)
         {
             EquipItem(0);
-        }else if(Input.GetKeyDown(KeyCode.Alpha2))
+        }else if(Input.GetKeyDown(KeyCode.Alpha2) && manager.pc.invSlots[1] != null)
         {
             EquipItem(1);
-        }else if(Input.GetKeyDown(KeyCode.Alpha3))
+        }else if(Input.GetKeyDown(KeyCode.Alpha3) && manager.pc.invSlots[2] != null)
         {
             EquipItem(2);
         }
@@ -122,6 +122,8 @@ public class InventoryManager : MonoBehaviour
 
     public void EquipItem(int slotToEquip)
     {
+        manager.pc.invIndex = slotToEquip;
+
         if (manager.pc.equippedItem != null)
         {
             Destroy(manager.pc.equippedItem);
@@ -129,6 +131,7 @@ public class InventoryManager : MonoBehaviour
         }
 
         manager.pc.equippedItem = Instantiate(manager.pc.invSlots[slotToEquip].currentItem.itemObj, manager.pc.holdingHand);
+        manager.pc.equippedItem.name = manager.pc.invSlots[slotToEquip].currentItem.itemName;
 
         EquipSettings();
 

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4228793573810958866}
   - component: {fileID: 4228793573810958867}
   - component: {fileID: 7435399696254130797}
+  - component: {fileID: 3374041984618814499}
   m_Layer: 0
   m_Name: 'Temporary Necronoemicoen '
   m_TagString: Item
@@ -30,11 +31,11 @@ Transform:
   m_GameObject: {fileID: 4228793573810958864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.1, z: 0.7}
+  m_LocalScale: {x: 0.16666667, y: 0.033333335, z: 0.23333333}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4228793573810958876
 MeshFilter:
@@ -147,3 +148,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 6edac98cb7e5cf848a3d62840784f6ec, type: 2}
+--- !u!135 &3374041984618814499
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4228793573810958864}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0, y: 0, z: 0}

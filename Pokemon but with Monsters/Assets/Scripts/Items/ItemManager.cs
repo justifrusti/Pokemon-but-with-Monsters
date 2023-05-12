@@ -5,4 +5,6 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     public List<Item> items;
+
+    public Item orb;
 }

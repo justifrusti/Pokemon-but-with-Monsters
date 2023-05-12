@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
     public RaycastHit hit;
     private bool isCrouching = false;
     private bool isLookingAtInteractable = false;
+    [HideInInspector] public int invIndex;
     [HideInInspector] public GameObject equippedItem;
     [HideInInspector] public Item currentItem;
     [HideInInspector] public bool isGrounded;
@@ -372,7 +373,35 @@ public class PlayerController : MonoBehaviour
             case ControllerData.Type.CamType.UnityStandard:
                 if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10.0f))
                 {
-                    if (hit.transform.gameObject.CompareTag("Item"))
+                    if(hit.collider.gameObject.CompareTag("Item"))
+                    {
+                        isLookingAtInteractable = true;
+                        print("Press 'E' to Pickup");
+
+                        if (Input.GetButtonDown(playerControlData.interact))
+                        {
+                            for (int i = 0; i < invSlots.Count; i++)
+                            {
+                                if (invSlots[i].currentItem == null)
+                                {
+                                    invSlots[i].AddItem(hit.collider.GetComponent<ItemRef>().item);
+
+                                    Destroy(hit.collider.gameObject);
+                                    break;
+                                }
+                            }
+                        }
+                    }else
+                    {
+                        isLookingAtInteractable = false;
+                    }
+                }
+                break;
+
+            case ControllerData.Type.CamType.Cinemachine:
+                if (Physics.Raycast(cmCam.transform.position, cmCam.transform.forward, out hit, 10.0f))
+                {
+                    if (hit.collider.gameObject.CompareTag("Item"))
                     {
                         isLookingAtInteractable = true;
                         print("Press 'E' to Pickup");
@@ -392,34 +421,6 @@ public class PlayerController : MonoBehaviour
                         }
                     }
                     else
-                    {
-                        isLookingAtInteractable = false;
-                    }
-                }
-                break;
-
-            case ControllerData.Type.CamType.Cinemachine:
-                if (Physics.Raycast(cmCam.transform.position, cmCam.transform.forward, out hit, 10.0f))
-                {
-                    if (hit.transform.gameObject.CompareTag("Item"))
-                    {
-                        isLookingAtInteractable = true;
-                        print("Press 'E' to Pickup");
-
-                        if (Input.GetButtonDown(playerControlData.interact))
-                        {
-                            for (int i = 0; i < invSlots.Count; i++)
-                            {
-                                if (invSlots[i].currentItem == null)
-                                {
-                                    invSlots[i].AddItem(hit.collider.GetComponent<ItemRef>().item);
-
-                                    Destroy(hit.collider.gameObject);
-                                    break;
-                                }
-                            }
-                        }
-                    }else
                     {
                         isLookingAtInteractable = false;
                     }

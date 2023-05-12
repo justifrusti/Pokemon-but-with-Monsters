@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChestBehaviour : MonoBehaviour
@@ -32,16 +31,26 @@ public class ChestBehaviour : MonoBehaviour
 
     private void Start()
     {
-        if(itemManager.items.Count != 0)
+        switch(chestType)
         {
-            int index = Random.Range(0, itemManager.items.Count);
+            case ChestType.Area:
+                if (itemManager.items.Count != 0)
+                {
+                    int index = Random.Range(0, itemManager.items.Count);
 
-            Instantiate(itemManager.items[index].itemObj, itemSpawnPoint.position, Quaternion.identity);
+                    Instantiate(itemManager.items[index].itemObj, itemSpawnPoint.position, Quaternion.identity);
 
-            itemManager.items.RemoveAt(index);
-        }else
-        {
-            Destroy(gameObject);
+                    itemManager.items.RemoveAt(index);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+                break;
+
+            case ChestType.Orb:
+                Instantiate(itemManager.orb.itemObj, itemSpawnPoint.position, Quaternion.identity);
+                break;
         }
     }
 
