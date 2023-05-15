@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   source: {fileID: 0}
   clipName: Music
-  clip: {fileID: 8300000, guid: c7ff5a9ff36dc7a42a49b5605fd1bb78, type: 3}
+  clip: {fileID: 8300000, guid: 464eec95e0729d849bf35cc54736c2cf, type: 3}
   group: {fileID: -3752375160622021651, guid: f59d9b19c9e6e2946a6a4f9389caac22, type: 2}
-  volume: 0.4
+  volume: 1
   pitch: 1
-  loop: 0
-  playOnAwake: 0
+  loop: 1
+  playOnAwake: 1

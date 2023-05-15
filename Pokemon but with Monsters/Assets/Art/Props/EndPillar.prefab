@@ -130,7 +130,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 5
+  orbName: Orb
   orb: {fileID: 2811226382873228097}
+  controller: {fileID: 0}
 --- !u!1 &7264222537591895173
 GameObject:
   m_ObjectHideFlags: 0

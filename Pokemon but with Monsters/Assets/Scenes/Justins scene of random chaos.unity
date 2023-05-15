@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 123637872}
   m_Layer: 0
   m_Name: DunGjeonGjeneratoer
-  m_TagString: Untagged
+  m_TagString: DungeonGenerator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -251,44 +251,38 @@ MonoBehaviour:
   sizeCap: 10
   startPos: 0
   maxItterations: 10000
-  finishRoom:
-    room: {fileID: 0}
-    minPos: {x: 0, y: 0}
-    maxPos: {x: 0, y: 0}
-    mustBeSpawned: 0
-    obligatory: 0
-    isOneTimeUse: 0
   rooms:
-  - room: {fileID: 4020692570221459217, guid: 36eb1b8f3c60b424e98e388c7887c8e2, type: 3}
+  - room: {fileID: 4020692570221459217, guid: 421ffe8e6139e9245aaacf362e6a03f4, type: 3}
     minPos: {x: 0, y: 0}
+    maxPos: {x: 7, y: 7}
+    mustBeSpawned: 0
+    obligatory: 0
+    isOneTimeUse: 0
+  - room: {fileID: 4020692570221459217, guid: 5bd537eb46122ad429073b0aa4dddd8c, type: 3}
+    minPos: {x: 3, y: 3}
     maxPos: {x: 10, y: 10}
     mustBeSpawned: 0
     obligatory: 0
     isOneTimeUse: 0
-  - room: {fileID: 4020692570221459217, guid: c2b47f492106bac42b6a1a9a27e5dade, type: 3}
-    minPos: {x: 9, y: 9}
-    maxPos: {x: 10, y: 10}
-    mustBeSpawned: 1
-    obligatory: 1
-    isOneTimeUse: 1
-  - room: {fileID: 4020692570221459217, guid: a57145776a78b9b4ab86f39bad94e0cd, type: 3}
+  - room: {fileID: 6624153437050975312, guid: a359ba37747c8f941918b7df6850f238, type: 3}
     minPos: {x: 3, y: 3}
     maxPos: {x: 8, y: 8}
     mustBeSpawned: 1
     obligatory: 0
     isOneTimeUse: 1
-  - room: {fileID: 4020692570221459217, guid: 0f9b8527306fc2a46baf4a0b7acc3fd5, type: 3}
+  - room: {fileID: 4020692570221459217, guid: 71cc41c5473641e428a95e1dfd3e6efe, type: 3}
+    minPos: {x: 9, y: 9}
+    maxPos: {x: 10, y: 10}
+    mustBeSpawned: 1
+    obligatory: 1
+    isOneTimeUse: 1
+  - room: {fileID: 4020692570221459217, guid: 4331bf34c403824458868e0173012b0e, type: 3}
     minPos: {x: 0, y: 0}
     maxPos: {x: 10, y: 10}
     mustBeSpawned: 0
     obligatory: 0
     isOneTimeUse: 0
-  - room: {fileID: 4020692570221459217, guid: 37e33aff0e63ce749a27bf5c391d0250, type: 3}
-    minPos: {x: 0, y: 0}
-    maxPos: {x: 10, y: 10}
-    mustBeSpawned: 0
-    obligatory: 0
-    isOneTimeUse: 0
+  propList: []
   generatedRooms: []
   offset: {x: 5.1, y: 5.1}
   dungeonSeed: 0
@@ -1472,6 +1466,7 @@ GameObject:
   - component: {fileID: 1123074012}
   - component: {fileID: 1123074015}
   - component: {fileID: 1123074016}
+  - component: {fileID: 1123074017}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -1519,6 +1514,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Damping: 0
+--- !u!114 &1123074017
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123074011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: e9ce97b7a206dc64d90931ea044e0c72, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0.16
+  m_FrequencyGain: 0.32
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1247586449
 GameObject:
   m_ObjectHideFlags: 0
@@ -2791,7 +2803,7 @@ MonoBehaviour:
   cmFreeLookCam: {fileID: 1119349126}
   moveType: 0
   walkSpeed: 5
-  runSpeed: 10
+  runSpeed: 7.5
   sensitivity: 180
   clampMinX: 60
   clampMaxX: -90
@@ -2806,6 +2818,7 @@ MonoBehaviour:
   - {fileID: 1372668417}
   - {fileID: 1463880182}
   holdingHand: {fileID: 607461819}
+  invIndex: 0
   equippedItem: {fileID: 0}
   currentItem: {fileID: 0}
   isGrounded: 0

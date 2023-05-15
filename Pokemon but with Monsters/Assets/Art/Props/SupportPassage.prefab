@@ -32,7 +32,7 @@ Transform:
   - {fileID: 2826024774113052137}
   - {fileID: 8702995740768812293}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2808154084049072833
 PrefabInstance:
@@ -101,6 +101,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SupportPillarR
+      objectReference: {fileID: 0}
+    - target: {fileID: 4664922590001385731, guid: afe1cdf0daa646b428aef307f5cba765,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

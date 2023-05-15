@@ -35,6 +35,7 @@ public class TeleporterBehaviour : MonoBehaviour
                     {
                         orb.gameObject.SetActive(true);
                         controller.invSlots[controller.invIndex].RemoveItem();
+                        Destroy(controller.equippedItem);
                     }
                 }
             }

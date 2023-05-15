@@ -7,6 +7,13 @@ public class InventorySlot : MonoBehaviour
 {
     public Item currentItem;
 
+    Sprite sprite;
+
+    private void Start()
+    {
+        sprite = GetComponent<Image>().sprite;
+    }
+
     public void AddItem(Item itemToAdd)
     {
         currentItem = itemToAdd;
@@ -16,6 +23,6 @@ public class InventorySlot : MonoBehaviour
     public void RemoveItem()
     {
         currentItem = null;
-        GetComponent<Image>().sprite = null;
+        GetComponent<Image>().sprite = sprite;
     }
 }

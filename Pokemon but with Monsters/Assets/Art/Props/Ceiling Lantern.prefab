@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9112259057662292532}
   m_Layer: 0
-  m_Name: Test Lantern
+  m_Name: Ceiling Lantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

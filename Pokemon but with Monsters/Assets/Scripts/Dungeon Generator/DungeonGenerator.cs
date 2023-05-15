@@ -18,8 +18,9 @@ public class DungeonGenerator : MonoBehaviour
     public int maxItterations = 10000;
     private int currentRooms;
 
-    public RuleSet finishRoom;
     public List<RuleSet> rooms;
+
+    public Prop[] propList;
 
     [HideInInspector]public List<GameObject> generatedRooms;
 
@@ -75,6 +76,14 @@ public class DungeonGenerator : MonoBehaviour
 
             return 0;
         }
+    }
+
+    [System.Serializable]
+    public class Prop
+    {
+        public GameObject propModel;
+
+        public bool isOneTimeUse;
     }
 
     void Awake()
@@ -199,9 +208,9 @@ public class DungeonGenerator : MonoBehaviour
 
                     var newRoom = Instantiate(rooms[randomRoom].room, new Vector3(x * offset.x, 0, -y * offset.y), Quaternion.identity, generatorPosition).GetComponent<RoomManager>();
 
-                    if(!generatedRooms.Contains(newRoom.gameObject))
+                    if (!generatedRooms.Contains(newRoom.gameObject))
                     {
-                        generatedRooms.Add(newRoom.gameObject); 
+                        generatedRooms.Add(newRoom.gameObject);
                     }
 
                     newRoom.UpdateRoom(currentCell.status);
