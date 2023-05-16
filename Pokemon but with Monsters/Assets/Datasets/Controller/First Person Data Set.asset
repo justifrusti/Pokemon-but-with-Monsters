@@ -18,7 +18,7 @@ MonoBehaviour:
     controlMode: 1
   canWalk: 1
   canSprint: 1
-  canJump: 1
+  canJump: 0
   canInteract: 1
   canLean: 0
   canCrouch: 1
