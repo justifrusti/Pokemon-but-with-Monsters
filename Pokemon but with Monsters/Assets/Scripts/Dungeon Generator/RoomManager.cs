@@ -5,8 +5,6 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class RoomManager : MonoBehaviour
 {
-    public DungeonGenerator generator;
-
     [Header("Room Buildup")]
     public GameObject[] walls; 
     public GameObject[] doorways;
@@ -18,10 +16,5 @@ public class RoomManager : MonoBehaviour
             doorways[i].SetActive(status[i]);
             walls[i].SetActive(!status[i]);
         }
-    }
-
-    private void Start()
-    {
-        generator = GameObject.FindGameObjectWithTag("DungeonGenerator").GetComponent<DungeonGenerator>();
     }
 }

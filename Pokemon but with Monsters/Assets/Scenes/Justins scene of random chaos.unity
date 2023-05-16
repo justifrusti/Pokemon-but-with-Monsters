@@ -254,12 +254,12 @@ MonoBehaviour:
   rooms:
   - room: {fileID: 4020692570221459217, guid: 421ffe8e6139e9245aaacf362e6a03f4, type: 3}
     minPos: {x: 0, y: 0}
-    maxPos: {x: 7, y: 7}
+    maxPos: {x: 10, y: 10}
     mustBeSpawned: 0
     obligatory: 0
     isOneTimeUse: 0
-  - room: {fileID: 4020692570221459217, guid: 5bd537eb46122ad429073b0aa4dddd8c, type: 3}
-    minPos: {x: 3, y: 3}
+  - room: {fileID: 4020692570221459217, guid: 41517369394535f41b4db65c014602ec, type: 3}
+    minPos: {x: 0, y: 0}
     maxPos: {x: 10, y: 10}
     mustBeSpawned: 0
     obligatory: 0
@@ -276,13 +276,6 @@ MonoBehaviour:
     mustBeSpawned: 1
     obligatory: 1
     isOneTimeUse: 1
-  - room: {fileID: 4020692570221459217, guid: 4331bf34c403824458868e0173012b0e, type: 3}
-    minPos: {x: 0, y: 0}
-    maxPos: {x: 10, y: 10}
-    mustBeSpawned: 0
-    obligatory: 0
-    isOneTimeUse: 0
-  propList: []
   generatedRooms: []
   offset: {x: 5.1, y: 5.1}
   dungeonSeed: 0

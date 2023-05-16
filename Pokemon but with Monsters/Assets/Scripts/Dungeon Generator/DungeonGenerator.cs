@@ -20,8 +20,6 @@ public class DungeonGenerator : MonoBehaviour
 
     public List<RuleSet> rooms;
 
-    public Prop[] propList;
-
     [HideInInspector]public List<GameObject> generatedRooms;
 
     public Vector2 offset;
@@ -76,14 +74,6 @@ public class DungeonGenerator : MonoBehaviour
 
             return 0;
         }
-    }
-
-    [System.Serializable]
-    public class Prop
-    {
-        public GameObject propModel;
-
-        public bool isOneTimeUse;
     }
 
     void Awake()
