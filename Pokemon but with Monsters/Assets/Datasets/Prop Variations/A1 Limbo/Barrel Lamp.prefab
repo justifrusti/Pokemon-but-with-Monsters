@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7062786506395378642}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Barrel Lamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,6 +106,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Barrel
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3c4fe442b79ab4dbc3b0a35bb248af,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -156,10 +161,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7062786506395378642}
     m_Modifications:
+    - target: {fileID: 823342314981560006, guid: d9170108e96139d4d952e0fc88c68caf,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2741574287883044453, guid: d9170108e96139d4d952e0fc88c68caf,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3815061283628988313, guid: d9170108e96139d4d952e0fc88c68caf,
         type: 3}
       propertyPath: m_Name
       value: LanterProp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3815061283628988313, guid: d9170108e96139d4d952e0fc88c68caf,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5676899422554083340, guid: d9170108e96139d4d952e0fc88c68caf,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9112259057662292532, guid: d9170108e96139d4d952e0fc88c68caf,
         type: 3}

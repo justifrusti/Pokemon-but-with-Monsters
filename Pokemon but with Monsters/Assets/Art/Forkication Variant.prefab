@@ -11,12 +11,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 73bf1024f366b234bb4af2e80b0f7064,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 73bf1024f366b234bb4af2e80b0f7064,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.520484
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 73bf1024f366b234bb4af2e80b0f7064,
         type: 3}
@@ -26,7 +26,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 73bf1024f366b234bb4af2e80b0f7064,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -6.4133315
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 73bf1024f366b234bb4af2e80b0f7064,
         type: 3}
@@ -71,7 +71,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 73bf1024f366b234bb4af2e80b0f7064,
         type: 3}
       propertyPath: m_Name
-      value: Forkication
+      value: Forkication Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

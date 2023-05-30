@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class DungeonGenerator : MonoBehaviour
 {
@@ -76,13 +77,10 @@ public class DungeonGenerator : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        generatorPosition = gameObject.transform;
-    }
-
     void Start()
     {
+        generatorPosition = gameObject.transform;
+
         if (useFillInSeed)
         {
             dungeonSeed = fillInSeed;

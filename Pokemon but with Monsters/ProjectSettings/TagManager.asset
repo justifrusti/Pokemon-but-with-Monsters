@@ -9,6 +9,8 @@ TagManager:
   - Chest
   - GameManager
   - DungeonGenerator
+  - Pathfinder
+  - RoamingPoint
   layers:
   - Default
   - TransparentFX
@@ -16,8 +18,8 @@ TagManager:
   - CamCollision
   - Water
   - UI
-  - 
-  - 
+  - Unwalkable
+  - Walkable
   - 
   - 
   - 

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1023088950754855771}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CrateDust No Lamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 142253048971603559}
   - component: {fileID: 2746515368779176621}
   - component: {fileID: 6836334377777657982}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: NewgameModels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
