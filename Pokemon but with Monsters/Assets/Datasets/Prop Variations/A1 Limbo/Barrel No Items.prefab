@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7062786506395378642}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Barrel No Items
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &7062786506395378642
 Transform:
@@ -108,7 +108,12 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: fb3c4fe442b79ab4dbc3b0a35bb248af,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb3c4fe442b79ab4dbc3b0a35bb248af,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -118,6 +123,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6066647292355157099}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: fb3c4fe442b79ab4dbc3b0a35bb248af,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4614581306394140281}
   m_SourcePrefab: {fileID: 100100000, guid: fb3c4fe442b79ab4dbc3b0a35bb248af, type: 3}
 --- !u!4 &2755360421257547982 stripped
 Transform:
@@ -152,3 +161,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.99999946, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: -0.000000029802322}
+--- !u!114 &4614581306394140281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3276035684188179060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Area: 1
+  m_AffectedAgents: ffffffff

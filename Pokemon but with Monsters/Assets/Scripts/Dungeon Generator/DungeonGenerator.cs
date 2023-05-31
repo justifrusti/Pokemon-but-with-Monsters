@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class DungeonGenerator : MonoBehaviour
 {
     public enum GenerationState { Setup, Generating, Finished, Disabled };
     public GenerationState generationState;
+
+    public NavMeshSurface navMeshSurface;
 
     [Header("Generation Ruleset")]
     public Transform generatorPosition;
@@ -124,6 +126,15 @@ public class DungeonGenerator : MonoBehaviour
                 break;
 
             case GenerationState.Finished:
+                navMeshSurface.BuildNavMesh();
+
+                GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+                foreach (GameObject enemy in enemies)
+                {
+                    enemy.GetComponent<EnemyBehaviour>().navMeshBuild = true;
+                }
+
                 generationState = GenerationState.Disabled;
                 break;
 

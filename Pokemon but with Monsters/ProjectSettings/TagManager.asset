@@ -11,6 +11,7 @@ TagManager:
   - DungeonGenerator
   - Pathfinder
   - RoamingPoint
+  - Enemy
   layers:
   - Default
   - TransparentFX

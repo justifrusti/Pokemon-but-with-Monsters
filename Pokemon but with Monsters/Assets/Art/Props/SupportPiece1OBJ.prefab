@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5411592323373273349}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: SupportPiece1OBJ
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 6690379911226097713}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6580806239410186202
 PrefabInstance:
@@ -104,6 +104,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ModularMinePiece
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 183d1f7ccb5fc2b4ea745d65da060926,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

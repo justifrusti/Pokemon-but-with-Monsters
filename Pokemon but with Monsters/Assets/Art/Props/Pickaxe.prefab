@@ -30,7 +30,7 @@ Transform:
   m_Children:
   - {fileID: 6973086174583427976}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &7444407935364953187
 PrefabInstance:
@@ -104,6 +104,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Pickaxe
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 49d2a447cec706946a360fd61e351121,
+        type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
