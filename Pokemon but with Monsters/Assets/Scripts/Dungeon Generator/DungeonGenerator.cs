@@ -128,6 +128,8 @@ public class DungeonGenerator : MonoBehaviour
             case GenerationState.Finished:
                 navMeshSurface.BuildNavMesh();
 
+                EnemySpawner.instance.SpawnEnemies();
+
                 GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
                 foreach (GameObject enemy in enemies)

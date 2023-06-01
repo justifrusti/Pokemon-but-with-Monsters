@@ -173,6 +173,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Unexplored"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
+
     public void Move()
     {
         rb.MovePosition(transform.position + (transform.forward * Input.GetAxis("Vertical") * speed * Time.deltaTime));

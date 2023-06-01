@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7643641770763168217}
   - component: {fileID: 5966693647428042812}
   - component: {fileID: 1366685938130213403}
+  - component: {fileID: 142082097225184248}
   m_Layer: 0
   m_Name: Artifact_Necronomicon
   m_TagString: Item
@@ -68,6 +69,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 6edac98cb7e5cf848a3d62840784f6ec, type: 2}
+--- !u!114 &142082097225184248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4061453266810429098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f6a6945d7f74c446a85afd78d39fde7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  artifactType: 0
+  element: 1
+  useRange: 5
 --- !u!1001 &1199734593408027433
 PrefabInstance:
   m_ObjectHideFlags: 0

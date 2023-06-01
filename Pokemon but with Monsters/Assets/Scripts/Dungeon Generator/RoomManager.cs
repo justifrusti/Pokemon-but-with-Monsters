@@ -8,7 +8,7 @@ public class RoomManager : MonoBehaviour
     [Header("Room Buildup")]
     public GameObject[] walls; 
     public GameObject[] doorways;
-    
+
     public void UpdateRoom(bool[] status)
     {
         for (int i = 0; i < status.Length; i++)

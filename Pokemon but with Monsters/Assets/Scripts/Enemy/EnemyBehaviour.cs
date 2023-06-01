@@ -7,7 +7,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyBehaviour : MonoBehaviour
 {
-    //Aggro State grabs points closer to the player
     public enum EnemyState
     {
         Roaming,
@@ -17,6 +16,13 @@ public class EnemyBehaviour : MonoBehaviour
         Forklift
     };
 
+    public enum EnemyType
+    {
+        None,
+        Death
+    }
+
+    public EnemyType type;
     public EnemyState behaviourState;
     [Space]
     public Transform target;
@@ -25,6 +31,7 @@ public class EnemyBehaviour : MonoBehaviour
     public float acceleration = 5;
     public float obstacleAvoidanceRadius = .5f;
     public float dstThreshold;
+    [Tooltip("The desired distance the Enemy keeps from the player when following")]public float stoppingDst;
     [Space]
     public float aggroRange;
     public float followRange;
@@ -36,6 +43,7 @@ public class EnemyBehaviour : MonoBehaviour
     [HideInInspector] public List<Transform> aggroPoints;
     [HideInInspector] public bool navMeshBuild;
 
+    private EnemyState previousBehaviourState;
     private float aggroTimer;
 
     private void Start()
@@ -49,7 +57,16 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if(navMeshBuild)
         {
-            if(behaviourState != EnemyState.Forklift)
+            if(behaviourState != previousBehaviourState)
+            {
+                previousBehaviourState = behaviourState;
+
+                CheckBehaviourSettings();
+
+                target = null;
+            }
+
+            if(behaviourState != EnemyState.Forklift && behaviourState != EnemyState.Captured)
             {
                 behaviourState = CheckAggroState();
                 behaviourState = CheckFollowState();
@@ -65,11 +82,11 @@ public class EnemyBehaviour : MonoBehaviour
                 aggroTimer -= Time.deltaTime;
             }
 
-            UpdateState();
+            MoveEnemy();
         }
     }
 
-    void UpdateState()
+    void MoveEnemy()
     {
         switch (behaviourState)
         {
@@ -83,10 +100,34 @@ public class EnemyBehaviour : MonoBehaviour
                 {
                     float dstToPlayer = Vector3.Distance(target.position, transform.position);
 
-                    if (dstToPlayer <= dstThreshold)
+                    if(dstToPlayer <= dstThreshold)
                     {
                         agent.speed = 0;
-                    }else
+                        agent.velocity = Vector3.zero;
+                    }
+                    else
+                    {
+                        agent.speed = speed;
+                    }
+                }
+                break;
+
+            case EnemyState.Captured:
+                if (target != GameObject.FindGameObjectWithTag("Player").transform)
+                {
+                    target = GameObject.FindGameObjectWithTag("Player").transform;
+                }
+
+                if (target != null)
+                {
+                    float dstToPlayer = Vector3.Distance(target.position, transform.position);
+
+                    if (dstToPlayer <= agent.stoppingDistance)
+                    {
+                        agent.speed = 0;
+                        agent.velocity = Vector3.zero;
+                    }
+                    else
                     {
                         agent.speed = speed;
                     }
@@ -140,6 +181,9 @@ public class EnemyBehaviour : MonoBehaviour
                     if (dstToPlayer <= dstThreshold)
                     {
                         agent.speed = 0;
+                        agent.velocity = Vector3.zero;
+
+                        AudioManager.instance.PlayClip("ForkliftCertified");
                     }
                     else
                     {
@@ -159,14 +203,19 @@ public class EnemyBehaviour : MonoBehaviour
     {
         float dst = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, transform.position);
 
-        return (dst < aggroRange && dst > followRange) ? EnemyState.Aggro : behaviourState;
+        return (dst < aggroRange && dst > followRange) ? EnemyState.Aggro : EnemyState.Roaming;
     }
 
     EnemyState CheckFollowState()
     {
         float dst = Vector3.Distance(GameObject.FindGameObjectWithTag("Player").transform.position, transform.position);
 
-        return dst < followRange ? EnemyState.Following : behaviourState;
+        if(behaviourState == EnemyState.Aggro)
+        {
+            return dst < followRange ? EnemyState.Following : EnemyState.Aggro;
+        }
+
+        return dst < followRange ? EnemyState.Following : EnemyState.Roaming;
     }
 
     void UpdateAggroList()
@@ -182,6 +231,52 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    void CheckBehaviourSettings()
+    {
+        switch(behaviourState)
+        {
+            case EnemyState.Following:
+                agent.stoppingDistance = 0;
+                break;
+
+            case EnemyState.Roaming:
+                agent.stoppingDistance = 0;
+                break;
+
+            case EnemyState.Aggro:
+                agent.stoppingDistance = 0;
+                break;
+
+            case EnemyState.Captured:
+                agent.stoppingDistance = stoppingDst;
+                break;
+        }
+    }
+
+    public void CheckCapture(ArtifactBehaviour.ArtifactElement element, ArtifactBehaviour behaviour)
+    {
+        switch(element)
+        {
+            case ArtifactBehaviour.ArtifactElement.None:
+                if(type == EnemyType.None)
+                {
+                    behaviourState = EnemyState.Captured;
+                    behaviour.hasCapture = true;
+                    behaviour.capturedEnemy = this;
+                }
+                break;
+
+            case ArtifactBehaviour.ArtifactElement.Death:
+                if(type == EnemyType.Death)
+                {
+                    behaviourState = EnemyState.Captured;
+                    behaviour.hasCapture = true;
+                    behaviour.capturedEnemy = this;
+                }
+                break;
+        }
+    }
+
     void InitializeUnit()
     {
         GameObject[] roamingObjects = GameObject.FindGameObjectsWithTag("RoamingPoint");
@@ -191,7 +286,12 @@ public class EnemyBehaviour : MonoBehaviour
             roamingPoints.Add(rp.transform);
         }
 
-        behaviourState = EnemyState.Roaming;
+        if(behaviourState != EnemyState.Forklift)
+        {
+            behaviourState = EnemyState.Roaming;
+        }
+
+        previousBehaviourState = behaviourState;
 
         agent.speed = speed;
         agent.radius = obstacleAvoidanceRadius;
