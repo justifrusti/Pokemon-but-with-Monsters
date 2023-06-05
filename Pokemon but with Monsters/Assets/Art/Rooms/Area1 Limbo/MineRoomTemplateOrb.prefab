@@ -1196,6 +1196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8514522049318047076}
   - component: {fileID: 6384148089439890857}
+  - component: {fileID: 853441294459397443}
   m_Layer: 0
   m_Name: MineRoomTemplateOrb
   m_TagString: Untagged
@@ -1241,6 +1242,22 @@ MonoBehaviour:
   - {fileID: 7854340708795119622}
   - {fileID: 2728670729791752868}
   - {fileID: 8822794747227450586}
+--- !u!114 &853441294459397443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6624153437050975312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a13940cc87907a469756588f181db1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  disableObj: {fileID: 6205880558036456434}
+  disableRange: 20
+  isRemovable: 1
 --- !u!1 &7722001316229987995
 GameObject:
   m_ObjectHideFlags: 0

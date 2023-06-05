@@ -12,6 +12,8 @@ TagManager:
   - Pathfinder
   - RoamingPoint
   - Enemy
+  - Unexplored
+  - Prop
   layers:
   - Default
   - TransparentFX
@@ -22,7 +24,7 @@ TagManager:
   - Unwalkable
   - Walkable
   - Enemy
-  - 
+  - BigEnemy
   - 
   - 
   - 

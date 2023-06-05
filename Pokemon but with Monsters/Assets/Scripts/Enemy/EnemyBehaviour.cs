@@ -22,8 +22,15 @@ public class EnemyBehaviour : MonoBehaviour
         Death
     }
 
+    public enum Enemy
+    {
+        FleshBlob,
+        WheepingAngel
+    }
+
     public EnemyType type;
     public EnemyState behaviourState;
+    public Enemy behaviour;
     [Space]
     public Transform target;
     [Space]
@@ -37,18 +44,25 @@ public class EnemyBehaviour : MonoBehaviour
     public float followRange;
     [Tooltip("The time between the updates of the list of aggro points")]public float aggroUpdateSpeed;
     [Space]
+    public bool isTamable;
+    [Space]
     public NavMeshAgent agent;
 
     [HideInInspector] public List<Transform> roamingPoints;
     [HideInInspector] public List<Transform> aggroPoints;
     [HideInInspector] public bool navMeshBuild;
+    [HideInInspector] public bool inView = false;
 
     private EnemyState previousBehaviourState;
     private float aggroTimer;
+    private Transform player;
+
+    RaycastHit hit;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
 
         InitializeUnit();
     }
@@ -57,6 +71,8 @@ public class EnemyBehaviour : MonoBehaviour
     {
         if(navMeshBuild)
         {
+            CheckEnemySpecificTrait();
+
             if(behaviourState != previousBehaviourState)
             {
                 previousBehaviourState = behaviourState;
@@ -86,6 +102,22 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    void CheckEnemySpecificTrait()
+    {
+        switch(behaviour)
+        {
+            case Enemy.WheepingAngel:
+                if(inView)
+                {
+                    agent.speed = 0;
+                }else
+                {
+                    agent.speed = speed;
+                }
+                break;
+        }
+    }
+
     void MoveEnemy()
     {
         switch (behaviourState)
@@ -107,7 +139,10 @@ public class EnemyBehaviour : MonoBehaviour
                     }
                     else
                     {
-                        agent.speed = speed;
+                        if(behaviour != Enemy.WheepingAngel)
+                        {
+                            agent.speed = speed;
+                        }
                     }
                 }
                 break;
@@ -255,25 +290,28 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void CheckCapture(ArtifactBehaviour.ArtifactElement element, ArtifactBehaviour behaviour)
     {
-        switch(element)
+        if(isTamable)
         {
-            case ArtifactBehaviour.ArtifactElement.None:
-                if(type == EnemyType.None)
-                {
-                    behaviourState = EnemyState.Captured;
-                    behaviour.hasCapture = true;
-                    behaviour.capturedEnemy = this;
-                }
-                break;
+            switch (element)
+            {
+                case ArtifactBehaviour.ArtifactElement.None:
+                    if (type == EnemyType.None)
+                    {
+                        behaviourState = EnemyState.Captured;
+                        behaviour.hasCapture = true;
+                        behaviour.capturedEnemy = this;
+                    }
+                    break;
 
-            case ArtifactBehaviour.ArtifactElement.Death:
-                if(type == EnemyType.Death)
-                {
-                    behaviourState = EnemyState.Captured;
-                    behaviour.hasCapture = true;
-                    behaviour.capturedEnemy = this;
-                }
-                break;
+                case ArtifactBehaviour.ArtifactElement.Death:
+                    if (type == EnemyType.Death)
+                    {
+                        behaviourState = EnemyState.Captured;
+                        behaviour.hasCapture = true;
+                        behaviour.capturedEnemy = this;
+                    }
+                    break;
+            }
         }
     }
 

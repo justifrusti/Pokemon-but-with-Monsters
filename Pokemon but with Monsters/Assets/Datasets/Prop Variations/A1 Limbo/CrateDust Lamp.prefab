@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2254104853951321091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5214024756552429678}
+  m_Layer: 3
+  m_Name: Inside
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5214024756552429678
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2254104853951321091}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3915521373772194242}
+  - {fileID: 4700882212126077130}
+  m_Father: {fileID: 1023088950754855771}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3934013631105188608
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,9 +42,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1023088950754855771}
+  - component: {fileID: 2671236428428682292}
+  - component: {fileID: 7759928683572421748}
   m_Layer: 3
   m_Name: CrateDust Lamp
-  m_TagString: Untagged
+  m_TagString: Prop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -28,11 +63,39 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3915521373772194242}
-  - {fileID: 4700882212126077130}
+  - {fileID: 5214024756552429678}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2671236428428682292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3934013631105188608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a13940cc87907a469756588f181db1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  disableObj: {fileID: 2254104853951321091}
+  disableRange: 25
+  isRemovable: 0
+--- !u!114 &7759928683572421748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3934013631105188608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f84ed099e78da1d4d971c1bba8894b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionObj: {fileID: 4403791859471907704}
 --- !u!1 &4403791859471907704
 GameObject:
   m_ObjectHideFlags: 0
@@ -44,11 +107,11 @@ GameObject:
   - component: {fileID: 3915521373772194242}
   - component: {fileID: 142253048971603559}
   - component: {fileID: 2746515368779176621}
-  - component: {fileID: 6836334377777657982}
-  - component: {fileID: 8994337509884711019}
+  - component: {fileID: 8083719977602445297}
+  - component: {fileID: 9068305574556677950}
   m_Layer: 3
   m_Name: NewgameModels
-  m_TagString: Untagged
+  m_TagString: Prop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -65,7 +128,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1023088950754855771}
+  m_Father: {fileID: 5214024756552429678}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &142253048971603559
@@ -118,7 +181,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6836334377777657982
+--- !u!65 &8083719977602445297
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,29 +202,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.49935132, z: -0.000000029802322}
---- !u!114 &8994337509884711019
-MonoBehaviour:
+--- !u!208 &9068305574556677950
+NavMeshObstacle:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4403791859471907704}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35e95dc5ff2b64380880dd7ac5922847, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
-  m_Area: 1
-  m_AffectedAgents: ffffffff
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.499, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &4560418139395965694
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1023088950754855771}
+    m_TransformParent: {fileID: 5214024756552429678}
     m_Modifications:
     - target: {fileID: 823342314981560006, guid: d9170108e96139d4d952e0fc88c68caf,
         type: 3}

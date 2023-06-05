@@ -23,11 +23,11 @@ public class EnemySpawner : MonoBehaviour
 
         if (spawnableEnemies.Count < 3 && spawnableEnemies.Count != 0)
         {
-            enemiesToSpawn = Random.Range(1, spawnableEnemies.Count);
+            enemiesToSpawn = Random.Range(2, spawnableEnemies.Count);
         }
         else
         {
-            enemiesToSpawn = Random.Range(1, 4);
+            enemiesToSpawn = Random.Range(2, 4);
         }
 
         for (int i = 0; i < enemiesToSpawn; i++)

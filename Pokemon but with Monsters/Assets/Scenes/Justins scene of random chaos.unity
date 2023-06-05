@@ -1616,10 +1616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnableEnemies:
   - {fileID: 1134400297312693111, guid: 0c5eb293132f0ce43828f2fe9fb20e0b, type: 3}
-  - {fileID: 1134400297312693111, guid: 0c5eb293132f0ce43828f2fe9fb20e0b, type: 3}
-  - {fileID: 1134400297312693111, guid: 0c5eb293132f0ce43828f2fe9fb20e0b, type: 3}
-  - {fileID: 1134400297312693111, guid: 0c5eb293132f0ce43828f2fe9fb20e0b, type: 3}
-  - {fileID: 1134400297312693111, guid: 0c5eb293132f0ce43828f2fe9fb20e0b, type: 3}
+  - {fileID: 4494238080386722216, guid: 61764de986163304abba5ff6db7eb15e, type: 3}
   spawnPoints: []
 --- !u!1 &1274477948
 GameObject:

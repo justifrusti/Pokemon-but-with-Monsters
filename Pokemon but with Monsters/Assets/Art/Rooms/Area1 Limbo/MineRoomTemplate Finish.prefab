@@ -519,6 +519,53 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.000001, y: 3, z: 0.1414217}
   m_Center: {x: 0, y: 1.5, z: -0.000000040978204}
+--- !u!1 &2484323321234682614
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 519224690146150206}
+  - component: {fileID: 3782362992206791130}
+  m_Layer: 0
+  m_Name: Ceiling Prop Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &519224690146150206
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2484323321234682614}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1875835360032083493}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3782362992206791130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2484323321234682614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db7f14b614c9ce744a3614de7400a04b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possibleItems:
+  - {fileID: 3020045179525732871, guid: ac75416e43320954e97c6f624ee26bac, type: 3}
+  - {fileID: 3020045179525732871, guid: f1d760b26b213244dab35056136b4bc0, type: 3}
 --- !u!1 &3317654674628304700
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,6 +782,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1875835360032083493}
   - component: {fileID: 604126825140197141}
+  - component: {fileID: 8058578878557435358}
   m_Layer: 0
   m_Name: MineRoomTemplate Finish
   m_TagString: Untagged
@@ -755,6 +803,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2208401763348549117}
+  - {fileID: 519224690146150206}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -770,8 +819,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59a758cf4acb4ed44a8c7b6d8117849b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  renderRadius: 30
-  interior: {fileID: 1234746827455628818}
   walls:
   - {fileID: 6502869676646906603}
   - {fileID: 3425611504639221991}
@@ -782,7 +829,25 @@ MonoBehaviour:
   - {fileID: 2011623535414712933}
   - {fileID: 1689018653835428151}
   - {fileID: 6833632910836880937}
-  enemies: []
+  spawnableProps: []
+  minProps: 0
+  maxProps: 0
+--- !u!114 &8058578878557435358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4020692570221459217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a13940cc87907a469756588f181db1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  disableObj: {fileID: 6612153960104519801}
+  disableRange: 20
+  isRemovable: 1
 --- !u!1 &4335354709599234750
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,7 +971,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5354881154134099913
 Transform:

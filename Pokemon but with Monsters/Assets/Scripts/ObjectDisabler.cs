@@ -10,6 +10,8 @@ public class ObjectDisabler : MonoBehaviour
 
     public float disableRange;
 
+    public bool isRemovable;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,12 +23,19 @@ public class ObjectDisabler : MonoBehaviour
     {
         float dst = Vector3.Distance(transform.position, player.position);
 
-        if(dst > disableRange)
+        if (disableObj == null)
         {
-            disableObj.SetActive(false);
+            Destroy(GetComponent<ObjectDisabler>());
         }else
         {
-            disableObj.SetActive(true);
+            if (dst > disableRange)
+            {
+                disableObj.SetActive(false);
+            }
+            else
+            {
+                disableObj.SetActive(true);
+            }
         }
     }
 }
