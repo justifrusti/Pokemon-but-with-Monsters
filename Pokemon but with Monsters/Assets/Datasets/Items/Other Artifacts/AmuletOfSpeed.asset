@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629c62487a684d84c8f29a981b5e97d0, type: 3}
+  m_Name: AmuletOfSpeed
+  m_EditorClassIdentifier: 
+  itemName: AmuletOfSpeed
+  itemDesc: A amulet that passively increases speed while in inventory
+  itemSprite: {fileID: 5361994636887097529, guid: 646d724114eeb1d44931512c9242ae06,
+    type: 3}
+  itemObj: {fileID: 9144628455546778514, guid: 6d0d6c0f544be254d800fbe1cf69d8b0, type: 3}
+  destroyChestAroundArtifact: 0

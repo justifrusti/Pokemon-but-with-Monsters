@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Necronomicon
   m_EditorClassIdentifier: 
   itemName: Necronomicon
-  itemDesc: The Book of the Dead, use this to take controll of enemies of the Dead
+  itemDesc: The Book of the Dead, use this to take controll of enemies of the Undead
     type
   itemSprite: {fileID: -6485243873307478867, guid: 646d724114eeb1d44931512c9242ae06,
     type: 3}

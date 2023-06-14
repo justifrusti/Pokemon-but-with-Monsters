@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 629c62487a684d84c8f29a981b5e97d0, type: 3}
+  m_Name: Monster Detector
+  m_EditorClassIdentifier: 
+  itemName: MonsterDetector
+  itemDesc: Changes from Green to Red depending on how close the closest enemy is.
+  itemSprite: {fileID: -1221614955568288717, guid: 646d724114eeb1d44931512c9242ae06,
+    type: 3}
+  itemObj: {fileID: 2666881391275293195, guid: da75bdf2f55963c4f8d37c80bd1d6172, type: 3}
+  destroyChestAroundArtifact: 1

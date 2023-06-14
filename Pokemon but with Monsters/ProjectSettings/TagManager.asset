@@ -14,6 +14,7 @@ TagManager:
   - Enemy
   - Unexplored
   - Prop
+  - Managers
   layers:
   - Default
   - TransparentFX

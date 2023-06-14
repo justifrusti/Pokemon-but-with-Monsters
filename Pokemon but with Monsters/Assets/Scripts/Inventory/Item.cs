@@ -11,4 +11,6 @@ public class Item : ScriptableObject
     public Sprite itemSprite;
 
     public GameObject itemObj;
+
+    public bool destroyChestAroundArtifact;
 }

@@ -30,15 +30,26 @@ public class EnemySpawner : MonoBehaviour
             enemiesToSpawn = Random.Range(2, 4);
         }
 
-        for (int i = 0; i < enemiesToSpawn; i++)
+        if(spawnableEnemies.Count == 1)
         {
-            int enemyIndex = Random.Range(0, spawnableEnemies.Count);
             int spawnPointIndex = Random.Range(0, spawnPoints.Count);
 
-            Instantiate(spawnableEnemies[enemyIndex].gameObject, spawnPoints[spawnPointIndex].position, Quaternion.identity);
+            Instantiate(spawnableEnemies[0].gameObject, spawnPoints[spawnPointIndex].position, Quaternion.identity);
 
-            spawnableEnemies.RemoveAt(enemyIndex);
+            spawnableEnemies.RemoveAt(0);
             spawnPoints.RemoveAt(spawnPointIndex);
+        }else if(spawnableEnemies.Count > 1)
+        {
+            for (int i = 0; i < enemiesToSpawn; i++)
+            {
+                int enemyIndex = Random.Range(0, spawnableEnemies.Count);
+                int spawnPointIndex = Random.Range(0, spawnPoints.Count);
+
+                Instantiate(spawnableEnemies[enemyIndex].gameObject, spawnPoints[spawnPointIndex].position, Quaternion.identity);
+
+                spawnableEnemies.RemoveAt(enemyIndex);
+                spawnPoints.RemoveAt(spawnPointIndex);
+            }
         }
     }
 

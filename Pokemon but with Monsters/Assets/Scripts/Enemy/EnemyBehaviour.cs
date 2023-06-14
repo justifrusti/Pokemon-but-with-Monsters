@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Profiling;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NavMeshAgent))]
@@ -33,9 +34,13 @@ public class EnemyBehaviour : MonoBehaviour
     public Enemy behaviour;
     [Space]
     public Transform target;
+    public float pathRefreshRate = 1.0f;
+    [Space]
+    public int maxHP;
+    public float invisFrameTime;
     [Space]
     public float speed = 5;
-    public float acceleration = 5;
+    [Tooltip("Keep this a minimum of 2X of the speed.")]public float acceleration = 10;
     public float obstacleAvoidanceRadius = .5f;
     public float dstThreshold;
     [Tooltip("The desired distance the Enemy keeps from the player when following")]public float stoppingDst;
@@ -54,15 +59,20 @@ public class EnemyBehaviour : MonoBehaviour
     [HideInInspector] public bool inView = false;
 
     private EnemyState previousBehaviourState;
+    private int currentHP;
     private float aggroTimer;
+    private bool invisFramesActive = false;
+    [HideInInspector]public bool canInvokeInvisReset = true;
     private Transform player;
-
-    RaycastHit hit;
+    private List<Vector3> path;
+    private Grids grid;
+    private float pathRefreshTimer = 0f;
 
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        //grid = GameObject.FindGameObjectWithTag("Pathfinder").GetComponent<Grids>();
 
         InitializeUnit();
     }
@@ -123,9 +133,9 @@ public class EnemyBehaviour : MonoBehaviour
         switch (behaviourState)
         {
             case EnemyState.Following:
-                if(target != GameObject.FindGameObjectWithTag("Player").transform)
+                if (target != player)
                 {
-                    target = GameObject.FindGameObjectWithTag("Player").transform;
+                    target = player;
                 }
 
                 if(target != null)
@@ -136,6 +146,14 @@ public class EnemyBehaviour : MonoBehaviour
                     {
                         agent.speed = 0;
                         agent.velocity = Vector3.zero;
+
+                        /*pathRefreshTimer += Time.deltaTime;
+
+                        if (pathRefreshTimer > pathRefreshRate)
+                        {
+                            pathRefreshTimer = 0;
+                            FindPath();
+                        }*/
                     }
                     else
                     {
@@ -148,9 +166,9 @@ public class EnemyBehaviour : MonoBehaviour
                 break;
 
             case EnemyState.Captured:
-                if (target != GameObject.FindGameObjectWithTag("Player").transform)
+                if (target != player)
                 {
-                    target = GameObject.FindGameObjectWithTag("Player").transform;
+                    target = player;
                 }
 
                 if (target != null)
@@ -170,6 +188,11 @@ public class EnemyBehaviour : MonoBehaviour
                 break;
 
             case EnemyState.Aggro:
+                if(aggroPoints.Count == 0)
+                {
+                    return;
+                }
+
                 if (target == null)
                 {
                     target = aggroPoints[Random.Range(0, aggroPoints.Count)];
@@ -187,6 +210,11 @@ public class EnemyBehaviour : MonoBehaviour
                 break;
 
             case EnemyState.Roaming:
+                if (roamingPoints.Count == 0)
+                {
+                    return;
+                }
+
                 if (target == null)
                 {
                     target = roamingPoints[Random.Range(0, roamingPoints.Count)];
@@ -204,9 +232,9 @@ public class EnemyBehaviour : MonoBehaviour
                 break;
 
             case EnemyState.Forklift:
-                if (target != GameObject.FindGameObjectWithTag("Player").transform)
+                if(target != player)
                 {
-                    target = GameObject.FindGameObjectWithTag("Player").transform;
+                    target = player;
                 }
 
                 if (target != null)
@@ -228,9 +256,11 @@ public class EnemyBehaviour : MonoBehaviour
                 break;
         }
 
-        if(target != null)
+        if (target != null && !agent.pathPending && agent.remainingDistance < .5f)
         {
-            agent.SetDestination(target.position);
+            Vector3 posV3 = new Vector3(target.position.x, transform.position.y, target.position.z);
+
+            agent.SetDestination(posV3);
         }
     }
 
@@ -315,6 +345,97 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    public void TakeDamage(int damage)
+    {
+        if (!invisFramesActive)
+        {
+            invisFramesActive = true;
+
+            CheckHealth(damage);
+
+            if (canInvokeInvisReset)
+            {
+                canInvokeInvisReset = false;
+
+                Invoke("ResetInvisFrames", invisFrameTime);
+            }
+        }
+    }
+
+    void CheckHealth(int damage)
+    {
+        if ((currentHP -= damage) <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+    }
+
+    void ResetInvisFrames()
+    {
+        if (invisFramesActive)
+        {
+            invisFramesActive = false;
+            canInvokeInvisReset = true;
+        }
+    }
+
+    /*private void FindPath()
+    {
+        Profiler.BeginSample($"Finding path");
+
+        switch(behaviourState)
+        {
+            case EnemyState.Captured:
+                path = grid.FindPath(transform.position, player.transform.position);
+                transform.transform.LookAt(player.transform);
+                break;
+
+            case EnemyState.Following:
+                path = grid.FindPath(transform.position, player.transform.position);
+                transform.transform.LookAt(player.transform);
+                break;
+        }    
+
+        Profiler.EndSample();
+
+        *//*if (enemyType == EnemyTypes.flyEnemy)
+        {
+            Profiler.BeginSample("Lifting path up in the air for flying enemies");
+            float averageHeight = 0;
+            foreach (Vector3 waypoint in path)
+            {
+                averageHeight += waypoint.y;
+            }
+
+            averageHeight /= path.Count;
+
+            for (int i = 0; i < path.Count; i++)
+            {
+                if (path[i].y > averageHeight)
+                {
+                    averageHeight = path[i].y + (flyEnemyFlightHeight / 3);
+                }
+            }
+
+            for (int i = 0; i < path.Count; i++)
+            {
+                //path[i] = new Vector3(path[i].x, averageHeight + flyEnemyFlightHeight, path[i].z);
+                Vector3 newWaypoint;
+                newWaypoint.x = path[i].x;
+                newWaypoint.y = averageHeight + flyEnemyFlightHeight;
+                newWaypoint.z = path[i].z;
+                path[i] = newWaypoint;
+            }
+
+            Profiler.EndSample();
+        }*//*
+    }*/
+
     void InitializeUnit()
     {
         GameObject[] roamingObjects = GameObject.FindGameObjectsWithTag("RoamingPoint");
@@ -331,9 +452,12 @@ public class EnemyBehaviour : MonoBehaviour
 
         previousBehaviourState = behaviourState;
 
+        currentHP = maxHP;
+
         agent.speed = speed;
         agent.radius = obstacleAvoidanceRadius;
         agent.acceleration = acceleration;
+        agent.autoBraking = false;
     }
 
     private void OnDrawGizmosSelected()

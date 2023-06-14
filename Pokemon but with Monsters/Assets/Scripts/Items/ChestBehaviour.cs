@@ -26,7 +26,7 @@ public class ChestBehaviour : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        itemManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<ItemManager>();
+        itemManager = GameObject.FindGameObjectWithTag("Managers").GetComponent<ItemManager>();
     }
 
     private void Start()
@@ -36,11 +36,22 @@ public class ChestBehaviour : MonoBehaviour
             case ChestType.Area:
                 if (itemManager.items.Count != 0)
                 {
-                    int index = Random.Range(0, itemManager.items.Count);
+                    if(Random.value < .2f)
+                    {
+                        int index = Random.Range(0, itemManager.items.Count);
 
-                    Instantiate(itemManager.items[index].itemObj, itemSpawnPoint.position, Quaternion.identity);
+                        GameObject g = Instantiate(itemManager.items[index].itemObj, itemSpawnPoint.position, Quaternion.identity);
 
-                    itemManager.items.RemoveAt(index);
+                        itemManager.items.RemoveAt(index);
+
+                        if (g.GetComponent<ItemRef>().item.destroyChestAroundArtifact)
+                        {
+                            Destroy(gameObject);
+                        }
+                    }else
+                    {
+                        Destroy(gameObject);
+                    }
                 }
                 else
                 {
@@ -50,6 +61,8 @@ public class ChestBehaviour : MonoBehaviour
 
             case ChestType.Orb:
                 Instantiate(itemManager.orb.itemObj, itemSpawnPoint.position, Quaternion.identity);
+
+                player.GetComponent<PlayerController>().orbPos = itemSpawnPoint.position;
                 break;
         }
     }

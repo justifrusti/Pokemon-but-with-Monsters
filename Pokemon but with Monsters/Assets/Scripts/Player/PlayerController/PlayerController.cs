@@ -2,6 +2,8 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed = 5f;
     public float runSpeed = 10f;
     public float sensitivity = 180f;
+    public float turnSpeed = 240f;
     [Space]
     public float clampMinX;
     public float clampMaxX;
@@ -34,7 +37,13 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 5f;
 
     [Header("Interact")]
-    public float interactRayDst = 1.0f;
+    public float pickupRange = 1.0f;
+
+    [Header("Health")]
+    public int maxHP;
+    public int currentHP;
+    [Space]
+    public float invisFrameTime = 1.2f;
 
     [Header("Leaning")]
     public float leanAngle = 20f;
@@ -49,7 +58,14 @@ public class PlayerController : MonoBehaviour
 
     public Transform holdingHand;
 
-    /*[Header("Cinemachine Camera's")]*/
+    [Header("AreaLoading")]
+    [Tooltip("The level to load when interacting with the teleporter")]public string lvlToLoad;
+    [Tooltip("The name of the music file to stop the ambience or music")]public string clipToStop;
+
+    [Header("AmuletStats")]
+    public int amuletHPBoost;
+    public float amuletSpeedBoost;
+    public float amuletStealthBoost;
 
     //Privates
     private Rigidbody rb;
@@ -63,12 +79,19 @@ public class PlayerController : MonoBehaviour
     public RaycastHit hit;
     private bool isCrouching = false;
     private bool isLookingAtInteractable = false;
+    private bool invisFramesActive = false;
+    private bool canInvokeInvisReset = true;
+    public bool hasHealthAmulet;
+    public bool hasSpeedAmulet;
+    public bool hasStealthAmulet;
+
     [HideInInspector] public int invIndex;
     [HideInInspector] public GameObject equippedItem;
     [HideInInspector] public Item currentItem;
     [HideInInspector] public bool isGrounded;
     [HideInInspector] public bool isWalking;
     [HideInInspector] public bool isRunning;
+    [HideInInspector] public Vector3 teleporterPos, orbPos;
 
     private void Start()
     {
@@ -149,6 +172,27 @@ public class PlayerController : MonoBehaviour
         {
             Crouch();
         }
+
+        if(TeleporterBehaviour.inArea)
+        {
+            if(Input.GetButtonDown("Interact"))
+            {
+                AudioManager.instance.StopClip(clipToStop);
+
+                SceneManager.LoadScene(lvlToLoad);
+            }    
+        }
+
+        //Debug
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            transform.position = teleporterPos;
+        }
+
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            transform.position = new Vector3(orbPos.x, orbPos.y + 1, orbPos.z);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -187,7 +231,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButton("Horizontal"))
         {
-            transform.Rotate((transform.up * Input.GetAxis("Horizontal")) * sensitivity * Time.fixedDeltaTime);
+            transform.Rotate((transform.up * Input.GetAxis("Horizontal")) * turnSpeed * Time.fixedDeltaTime);
         }
     }
 
@@ -392,14 +436,16 @@ public class PlayerController : MonoBehaviour
 
     public void Interact()
     {
+        Collider[] c = Physics.OverlapSphere(transform.position, pickupRange);
+
         switch (playerControlData.type.camType)
         {
             case ControllerData.Type.CamType.UnityStandard:
-                if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, 10.0f))
+
+                foreach (Collider col in c)
                 {
-                    if(hit.collider.gameObject.CompareTag("Item"))
+                    if(col.gameObject.CompareTag("Item"))
                     {
-                        isLookingAtInteractable = true;
                         print("Press 'E' to Pickup");
 
                         if (Input.GetButtonDown(playerControlData.interact))
@@ -410,24 +456,40 @@ public class PlayerController : MonoBehaviour
                                 {
                                     invSlots[i].AddItem(hit.collider.GetComponent<ItemRef>().item);
 
+                                    if(col.gameObject.GetComponent<ArtifactBehaviour>().amuletType != ArtifactBehaviour.AmuletType.None)
+                                    {
+                                        switch(col.gameObject.GetComponent<ArtifactBehaviour>().amuletType)
+                                        {
+                                            case ArtifactBehaviour.AmuletType.Health:
+                                                hasHealthAmulet = true;
+                                                break;
+
+                                            case ArtifactBehaviour.AmuletType.Speed:
+                                                hasSpeedAmulet = true;
+                                                break;
+
+                                            case ArtifactBehaviour.AmuletType.Stealth:
+                                                hasStealthAmulet = true;
+                                                break;
+                                        }
+
+                                        UpdateAmuletStats();
+                                    }
+
                                     Destroy(hit.collider.gameObject);
                                     break;
                                 }
                             }
                         }
-                    }else
-                    {
-                        isLookingAtInteractable = false;
                     }
                 }
                 break;
 
             case ControllerData.Type.CamType.Cinemachine:
-                if (Physics.Raycast(cmCam.transform.position, cmCam.transform.forward, out hit, 10.0f))
+                foreach (Collider col in c)
                 {
-                    if (hit.collider.gameObject.CompareTag("Item"))
+                    if (col.gameObject.CompareTag("Item"))
                     {
-                        isLookingAtInteractable = true;
                         print("Press 'E' to Pickup");
 
                         if (Input.GetButtonDown(playerControlData.interact))
@@ -436,20 +498,108 @@ public class PlayerController : MonoBehaviour
                             {
                                 if (invSlots[i].currentItem == null)
                                 {
-                                    invSlots[i].AddItem(hit.collider.GetComponent<ItemRef>().item);
+                                    invSlots[i].AddItem(col.gameObject.GetComponent<ItemRef>().item);
 
-                                    Destroy(hit.collider.gameObject);
+                                    Destroy(col.gameObject);
                                     break;
                                 }
                             }
                         }
                     }
-                    else
-                    {
-                        isLookingAtInteractable = false;
-                    }
                 }
                 break;
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if(!invisFramesActive)
+        {
+            invisFramesActive = true;
+
+            CheckHealth(damage);
+
+            if(canInvokeInvisReset)
+            {
+                canInvokeInvisReset = false;
+
+                Invoke("ResetInvisFrames", invisFrameTime);
+            }
+        }
+    }
+
+    void CheckHealth(int damage) 
+    {
+        if((currentHP -= damage) <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        rb.constraints = RigidbodyConstraints.None;
+        rb.velocity = Vector3.zero;
+
+        sensitivity = 0;
+    }
+
+    void ResetInvisFrames()
+    {
+        if(invisFramesActive)
+        {
+            invisFramesActive = false;
+            canInvokeInvisReset = true;
+        }
+    }
+
+    public void UpdateAmuletStats()
+    {
+        if(hasHealthAmulet)
+        {
+            maxHP = maxHP + amuletHPBoost;
+        }else if(!hasHealthAmulet)
+        {
+            maxHP = maxHP - amuletHPBoost;
+        }
+
+        if (hasSpeedAmulet)
+        {
+            walkSpeed = walkSpeed + amuletSpeedBoost;
+            runSpeed = runSpeed + amuletSpeedBoost;
+        }
+        else if (!hasSpeedAmulet)
+        {
+            walkSpeed = walkSpeed - amuletSpeedBoost;
+            runSpeed = runSpeed - amuletSpeedBoost;
+        }
+
+        if (hasStealthAmulet)
+        {
+            foreach (GameObject go in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+                EnemyBehaviour eb = go.GetComponent<EnemyBehaviour>();
+
+                if(eb.followRange > 0)
+                {
+                    eb.followRange -= amuletStealthBoost;
+                }
+
+                if(eb.aggroRange > 0)
+                {
+                    eb.aggroRange -= amuletStealthBoost;
+                }
+            }
+        }
+        else if (!hasStealthAmulet)
+        {
+            foreach (GameObject go in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+                EnemyBehaviour eb = go.GetComponent<EnemyBehaviour>();
+
+                eb.followRange += amuletStealthBoost;
+                eb.aggroRange += amuletStealthBoost;
+            }
         }
     }
 
@@ -511,6 +661,7 @@ public class PlayerController : MonoBehaviour
         }
 
         speed = walkSpeed;
+        currentHP = maxHP;
 
         isWalking = false;
         isRunning = false;
@@ -520,5 +671,12 @@ public class PlayerController : MonoBehaviour
 
         standingHeight = transform.localScale.y;
         targetHeight = standingHeight;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+
+        Gizmos.DrawWireSphere(transform.position, pickupRange);
     }
 }

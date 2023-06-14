@@ -115,6 +115,8 @@ public class InventoryManager : MonoBehaviour
 
             Instantiate(currentInvItem, player.transform.position + (player.transform.forward * 2), transform.rotation);
 
+            AmuletCheck(currentInvItem);
+
             hand.RemoveItem();
             hand.GetComponent<Image>().sprite = defaultImg;
         }
@@ -143,6 +145,32 @@ public class InventoryManager : MonoBehaviour
         Destroy(manager.pc.equippedItem.GetComponent<Rigidbody>());
         manager.pc.equippedItem.GetComponent<Collider>().isTrigger = true;
 
+        if(manager.pc.equippedItem.transform.GetChild(0) != null && manager.pc.equippedItem.transform.GetChild(0).GetComponent<Collider>() != null)
+        {
+            manager.pc.equippedItem.transform.GetChild(0).GetComponent<Collider>().isTrigger = true;
+        }
+
         manager.pc.currentItem = manager.pc.equippedItem.GetComponent<ItemRef>().item;
+    }
+
+    public void AmuletCheck(GameObject go)
+    {
+        if (go.gameObject.GetComponent<ArtifactBehaviour>().amuletType != ArtifactBehaviour.AmuletType.None)
+        {
+            switch (go.gameObject.GetComponent<ArtifactBehaviour>().amuletType)
+            {
+                case ArtifactBehaviour.AmuletType.Health:
+                    manager.pc.hasHealthAmulet = false;
+                    break;
+
+                case ArtifactBehaviour.AmuletType.Speed:
+                    manager.pc.hasSpeedAmulet = false;
+                    break;
+
+                case ArtifactBehaviour.AmuletType.Stealth:
+                    manager.pc.hasStealthAmulet = false;
+                    break;
+            }
+        }
     }
 }

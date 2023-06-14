@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TeleporterBehaviour : MonoBehaviour
 {
+    public string loadLvlName;
+
     public float range = 5f;
 
     public string orbName;
@@ -13,12 +16,17 @@ public class TeleporterBehaviour : MonoBehaviour
     private Transform player;
     public PlayerController controller;
 
+    public static bool inArea;
+    private bool placedOrb = false;
+
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         controller = player.GetComponent<PlayerController>();
 
         orb.gameObject.SetActive(false);
+
+        player.GetComponent<PlayerController>().teleporterPos = transform.position;
     }
 
     private void Update()
@@ -27,6 +35,11 @@ public class TeleporterBehaviour : MonoBehaviour
 
         if (dst < range)
         {
+            if(placedOrb)
+            {
+                inArea = true;
+            }
+
             if (controller.currentItem != null)
             {
                 if (controller.currentItem.name == orbName)
@@ -34,6 +47,7 @@ public class TeleporterBehaviour : MonoBehaviour
                     if (Input.GetButtonDown("LMB"))
                     {
                         orb.gameObject.SetActive(true);
+                        placedOrb = true;
                         controller.invSlots[controller.invIndex].RemoveItem();
                         Destroy(controller.equippedItem);
                     }

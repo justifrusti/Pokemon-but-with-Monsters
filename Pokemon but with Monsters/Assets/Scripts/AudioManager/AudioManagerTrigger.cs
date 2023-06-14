@@ -8,6 +8,11 @@ public class AudioManagerTrigger : MonoBehaviour
 
     public string audioToPlay;
 
+    private void Awake()
+    {
+        manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<AudioManager>();
+    }
+
     public void Start()
     {
         PlayAudio();

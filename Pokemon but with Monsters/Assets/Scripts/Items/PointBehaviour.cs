@@ -8,8 +8,11 @@ public class PointBehaviour : MonoBehaviour
 
     void Start()
     {
-        int index = Random.Range(0, possibleItems.Length);
+        if(Random.value > .3f)
+        {
+            int index = Random.Range(0, possibleItems.Length);
 
-        Instantiate(possibleItems[index], transform.position, possibleItems[index].transform.rotation, transform);
+            Instantiate(possibleItems[index], transform.position, possibleItems[index].transform.rotation, transform);
+        }
     }
 }

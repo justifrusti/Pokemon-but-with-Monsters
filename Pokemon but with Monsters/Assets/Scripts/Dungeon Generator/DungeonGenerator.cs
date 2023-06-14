@@ -9,6 +9,7 @@ public class DungeonGenerator : MonoBehaviour
     public GenerationState generationState;
 
     public NavMeshSurface navMeshSurface;
+    //public Grids grid;
 
     [Header("Generation Ruleset")]
     public Transform generatorPosition;
@@ -136,6 +137,8 @@ public class DungeonGenerator : MonoBehaviour
                 {
                     enemy.GetComponent<EnemyBehaviour>().navMeshBuild = true;
                 }
+
+                //grid.CreateGrid();
 
                 generationState = GenerationState.Disabled;
                 break;
