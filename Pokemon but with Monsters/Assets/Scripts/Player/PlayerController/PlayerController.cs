@@ -454,7 +454,7 @@ public class PlayerController : MonoBehaviour
                             {
                                 if (invSlots[i].currentItem == null)
                                 {
-                                    invSlots[i].AddItem(hit.collider.GetComponent<ItemRef>().item);
+                                    invSlots[i].AddItem(GetComponent<Collider>().GetComponent<ItemRef>().item);
 
                                     if(col.gameObject.GetComponent<ArtifactBehaviour>().amuletType != ArtifactBehaviour.AmuletType.None)
                                     {
@@ -476,7 +476,7 @@ public class PlayerController : MonoBehaviour
                                         UpdateAmuletStats();
                                     }
 
-                                    Destroy(hit.collider.gameObject);
+                                    Destroy(col.gameObject);
                                     break;
                                 }
                             }
@@ -498,7 +498,27 @@ public class PlayerController : MonoBehaviour
                             {
                                 if (invSlots[i].currentItem == null)
                                 {
-                                    invSlots[i].AddItem(col.gameObject.GetComponent<ItemRef>().item);
+                                    invSlots[i].AddItem(col.GetComponent<ItemRef>().item);
+
+                                    if (col.gameObject.GetComponent<ArtifactBehaviour>().amuletType != ArtifactBehaviour.AmuletType.None)
+                                    {
+                                        switch (col.gameObject.GetComponent<ArtifactBehaviour>().amuletType)
+                                        {
+                                            case ArtifactBehaviour.AmuletType.Health:
+                                                hasHealthAmulet = true;
+                                                break;
+
+                                            case ArtifactBehaviour.AmuletType.Speed:
+                                                hasSpeedAmulet = true;
+                                                break;
+
+                                            case ArtifactBehaviour.AmuletType.Stealth:
+                                                hasStealthAmulet = true;
+                                                break;
+                                        }
+
+                                        UpdateAmuletStats();
+                                    }
 
                                     Destroy(col.gameObject);
                                     break;

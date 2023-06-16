@@ -1706,7 +1706,7 @@ MonoBehaviour:
   - {fileID: 691234582}
   holdingHand: {fileID: 957695690}
   lvlToLoad: Lust
-  clipToStop: Music
+  clipToStop: CaveAmbience
   amuletHPBoost: 100
   amuletSpeedBoost: 100
   amuletStealthBoost: 100

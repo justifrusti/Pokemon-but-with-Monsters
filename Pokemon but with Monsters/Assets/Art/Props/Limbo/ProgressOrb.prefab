@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7356282801472119016}
   - component: {fileID: 6299763495406071101}
   - component: {fileID: 6318294174689133260}
+  - component: {fileID: 3629589617096972422}
   m_Layer: 0
   m_Name: ProgressOrb
   m_TagString: Item
@@ -118,6 +119,31 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3629589617096972422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7238897573253514733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f6a6945d7f74c446a85afd78d39fde7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  artifactType: 3
+  artifactName: 
+  element: 0
+  useRange: 5
+  hasCapture: 0
+  capturedEnemy: {fileID: 0}
+  playerStartPos: {x: 0, y: 1, z: 0}
+  utilityType: 0
+  utilityCheckTime: 0
+  enemies: []
+  detectorStartCol: {r: 0, g: 0, b: 0, a: 0}
+  detectorEndCol: {r: 0, g: 0, b: 0, a: 0}
+  amuletType: 0
 --- !u!1001 &8528280394161665561
 PrefabInstance:
   m_ObjectHideFlags: 0

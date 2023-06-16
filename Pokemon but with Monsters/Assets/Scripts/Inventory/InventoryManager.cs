@@ -172,5 +172,7 @@ public class InventoryManager : MonoBehaviour
                     break;
             }
         }
+
+        manager.pc.UpdateAmuletStats();
     }
 }
