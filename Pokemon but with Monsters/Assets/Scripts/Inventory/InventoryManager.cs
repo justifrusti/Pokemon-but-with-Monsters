@@ -174,6 +174,6 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        manager.pc.UpdateAmuletStats();
+        manager.pc.UpdateAmuletStats(go.gameObject.GetComponent<ArtifactBehaviour>());
     }
 }

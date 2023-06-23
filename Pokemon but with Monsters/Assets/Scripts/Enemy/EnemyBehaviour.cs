@@ -1,3 +1,4 @@
+using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine.AI;
 using UnityEngine.Profiling;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(AIDestinationSetter))]
 public class EnemyBehaviour : MonoBehaviour
 {
     public enum EnemyState
@@ -50,8 +51,6 @@ public class EnemyBehaviour : MonoBehaviour
     [Tooltip("The time between the updates of the list of aggro points")]public float aggroUpdateSpeed;
     [Space]
     public bool isTamable;
-    [Space]
-    public NavMeshAgent agent;
 
     [HideInInspector] public List<Transform> roamingPoints;
     [HideInInspector] public List<Transform> aggroPoints;
@@ -65,20 +64,20 @@ public class EnemyBehaviour : MonoBehaviour
     [HideInInspector]public bool canInvokeInvisReset = true;
     private Transform player;
     private List<Vector3> path;
-    //private Grids grid;
     private float pathRefreshTimer = 0f;
+    private AIDestinationSetter pathSetter;
 
     private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        //grid = GameObject.FindGameObjectWithTag("Pathfinder").GetComponent<Grids>();
 
         InitializeUnit();
     }
 
     private void Update()
     {
+        pathSetter.target = target;
+
         if(navMeshBuild)
         {
             CheckEnemySpecificTrait();
@@ -119,10 +118,10 @@ public class EnemyBehaviour : MonoBehaviour
             case Enemy.WheepingAngel:
                 if(inView)
                 {
-                    agent.speed = 0;
+                    //agent.speed = 0;
                 }else
                 {
-                    agent.speed = speed;
+                    //agent.speed = speed;
                 }
                 break;
         }
@@ -144,8 +143,8 @@ public class EnemyBehaviour : MonoBehaviour
 
                     if(dstToPlayer <= dstThreshold)
                     {
-                        agent.speed = 0;
-                        agent.velocity = Vector3.zero;
+                        //agent.speed = 0;
+                        //agent.velocity = Vector3.zero;
 
                         /*pathRefreshTimer += Time.deltaTime;
 
@@ -159,7 +158,7 @@ public class EnemyBehaviour : MonoBehaviour
                     {
                         if(behaviour != Enemy.WheepingAngel)
                         {
-                            agent.speed = speed;
+                            //agent.speed = speed;
                         }
                     }
                 }
@@ -175,7 +174,7 @@ public class EnemyBehaviour : MonoBehaviour
                 {
                     float dstToPlayer = Vector3.Distance(target.position, transform.position);
 
-                    if (dstToPlayer <= agent.stoppingDistance)
+                    /*if (dstToPlayer <= agent.stoppingDistance)
                     {
                         agent.speed = 0;
                         agent.velocity = Vector3.zero;
@@ -183,7 +182,7 @@ public class EnemyBehaviour : MonoBehaviour
                     else
                     {
                         agent.speed = speed;
-                    }
+                    }*/
                 }
                 break;
 
@@ -243,25 +242,25 @@ public class EnemyBehaviour : MonoBehaviour
 
                     if (dstToPlayer <= dstThreshold)
                     {
-                        agent.speed = 0;
-                        agent.velocity = Vector3.zero;
+                        //agent.speed = 0;
+                        //agent.velocity = Vector3.zero;
 
                         AudioManager.instance.PlayClip("ForkliftCertified");
                     }
                     else
                     {
-                        agent.speed = speed;
+                        //agent.speed = speed;
                     }
                 }
                 break;
         }
 
-        if (target != null && !agent.pathPending && agent.remainingDistance < .5f)
+        /*if (target != null && !agent.pathPending && agent.remainingDistance < .5f)
         {
             Vector3 posV3 = new Vector3(target.position.x, transform.position.y, target.position.z);
 
             agent.SetDestination(posV3);
-        }
+        }*/
     }
 
     EnemyState CheckAggroState()
@@ -301,19 +300,19 @@ public class EnemyBehaviour : MonoBehaviour
         switch (behaviourState)
         {
             case EnemyState.Following:
-                agent.stoppingDistance = 0;
+                //agent.stoppingDistance = 0;
                 break;
 
             case EnemyState.Roaming:
-                agent.stoppingDistance = 0;
+                //agent.stoppingDistance = 0;
                 break;
 
             case EnemyState.Aggro:
-                agent.stoppingDistance = 0;
+                //agent.stoppingDistance = 0;
                 break;
 
             case EnemyState.Captured:
-                agent.stoppingDistance = stoppingDst;
+                //agent.stoppingDistance = stoppingDst;
                 break;
         }
     }
@@ -454,10 +453,15 @@ public class EnemyBehaviour : MonoBehaviour
 
         currentHP = maxHP;
 
-        agent.speed = speed;
-        agent.radius = obstacleAvoidanceRadius;
-        agent.acceleration = acceleration;
-        agent.autoBraking = false;
+        if(pathSetter == null)
+        {
+            pathSetter = GetComponent<AIDestinationSetter>();
+        }
+
+        //agent.speed = speed;
+        //agent.radius = obstacleAvoidanceRadius;
+        //agent.acceleration = acceleration;
+        //agent.autoBraking = false;
     }
 
     private void OnDrawGizmosSelected()

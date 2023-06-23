@@ -81,10 +81,10 @@ public class PlayerController : MonoBehaviour
     private bool isLookingAtInteractable = false;
     private bool invisFramesActive = false;
     private bool canInvokeInvisReset = true;
-    public bool hasHealthAmulet;
-    public bool hasSpeedAmulet;
-    public bool hasStealthAmulet;
 
+    [HideInInspector] public bool hasHealthAmulet;
+    [HideInInspector] public bool hasSpeedAmulet;
+    [HideInInspector] public bool hasStealthAmulet;
     [HideInInspector] public int invIndex;
     [HideInInspector] public GameObject equippedItem;
     [HideInInspector] public Item currentItem;
@@ -473,7 +473,7 @@ public class PlayerController : MonoBehaviour
                                                 break;
                                         }
 
-                                        UpdateAmuletStats();
+                                        UpdateAmuletStats(col.gameObject.GetComponent<ArtifactBehaviour>());
                                     }
 
                                     Destroy(col.gameObject);
@@ -517,7 +517,7 @@ public class PlayerController : MonoBehaviour
                                                 break;
                                         }
 
-                                        UpdateAmuletStats();
+                                        UpdateAmuletStats(col.gameObject.GetComponent<ArtifactBehaviour>());
                                     }
 
                                     Destroy(col.gameObject);
@@ -573,22 +573,22 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void UpdateAmuletStats()
+    public void UpdateAmuletStats(ArtifactBehaviour behaviour)
     {
         if(hasHealthAmulet)
         {
             maxHP = maxHP + amuletHPBoost;
-        }else if(!hasHealthAmulet)
+        }else if(!hasHealthAmulet && behaviour.isEquiped)
         {
             maxHP = maxHP - amuletHPBoost;
         }
 
-        if (hasSpeedAmulet)
+        if (hasSpeedAmulet && behaviour.isEquiped)
         {
             walkSpeed = walkSpeed + amuletSpeedBoost;
             runSpeed = runSpeed + amuletSpeedBoost;
         }
-        else if (!hasSpeedAmulet)
+        else if (!hasSpeedAmulet && behaviour.isEquiped)
         {
             walkSpeed = walkSpeed - amuletSpeedBoost;
             runSpeed = runSpeed - amuletSpeedBoost;
@@ -610,8 +610,7 @@ public class PlayerController : MonoBehaviour
                     eb.aggroRange -= amuletStealthBoost;
                 }
             }
-        }
-        else if (!hasStealthAmulet)
+        }else if (!hasStealthAmulet)
         {
             foreach (GameObject go in GameObject.FindGameObjectsWithTag("Enemy"))
             {

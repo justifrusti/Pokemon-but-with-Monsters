@@ -8,9 +8,6 @@ public class DungeonGenerator : MonoBehaviour
     public enum GenerationState { Setup, Generating, Finished, Disabled };
     public GenerationState generationState;
 
-    public NavMeshSurface navMeshSurface;
-    //public Grids grid;
-
     [Header("Generation Ruleset")]
     public Transform generatorPosition;
 
@@ -127,9 +124,8 @@ public class DungeonGenerator : MonoBehaviour
                 break;
 
             case GenerationState.Finished:
-                navMeshSurface.BuildNavMesh();
-                //grid.CreateGrid(this);
-
+                AstarPath.active.Scan();
+                
                 EnemySpawner.instance.SpawnEnemies();
 
                 GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");

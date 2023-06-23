@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1110338762099620762}
   - component: {fileID: 5099705324261424610}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: RockPileMedium
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +48,7 @@ MonoBehaviour:
   player: {fileID: 0}
   disableObj: {fileID: 7256608387397727064}
   disableRange: 25
+  isRemovable: 0
 --- !u!1001 &7527150159180533257
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -135,6 +136,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RockPile
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 339fd77840e12814b8b2a7a3b4db6da5,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

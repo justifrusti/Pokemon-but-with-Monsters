@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4450847938119227561}
   - component: {fileID: 6528479074063924364}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Pickaxe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,6 +48,7 @@ MonoBehaviour:
   player: {fileID: 0}
   disableObj: {fileID: 7750325809797908786}
   disableRange: 25
+  isRemovable: 0
 --- !u!1001 &7444407935364953187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -124,7 +125,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 49d2a447cec706946a360fd61e351121,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
