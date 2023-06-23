@@ -65,7 +65,7 @@ public class EnemyBehaviour : MonoBehaviour
     [HideInInspector]public bool canInvokeInvisReset = true;
     private Transform player;
     private List<Vector3> path;
-    private Grids grid;
+    //private Grids grid;
     private float pathRefreshTimer = 0f;
 
     private void Start()
@@ -298,7 +298,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     void CheckBehaviourSettings()
     {
-        switch(behaviourState)
+        switch (behaviourState)
         {
             case EnemyState.Following:
                 agent.stoppingDistance = 0;
@@ -388,7 +388,7 @@ public class EnemyBehaviour : MonoBehaviour
     {
         Profiler.BeginSample($"Finding path");
 
-        switch(behaviourState)
+        switch (behaviourState)
         {
             case EnemyState.Captured:
                 path = grid.FindPath(transform.position, player.transform.position);
@@ -399,7 +399,7 @@ public class EnemyBehaviour : MonoBehaviour
                 path = grid.FindPath(transform.position, player.transform.position);
                 transform.transform.LookAt(player.transform);
                 break;
-        }    
+        }
 
         Profiler.EndSample();
 

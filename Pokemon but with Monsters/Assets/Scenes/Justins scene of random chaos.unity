@@ -872,7 +872,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &388228137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -885,6 +885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7044e5f8d46273947a6eca40ebb0513e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  generateGrid: 1
   gridSize: {x: 100, y: 100}
   nodeSize: {x: 0.5, y: 1, z: 0.5}
   unwalkable:
@@ -3543,7 +3544,7 @@ MonoBehaviour:
   clampMinX: 60
   clampMaxX: -90
   jumpForce: 5
-  interactRayDst: 1
+  pickupRange: 1
   maxHP: 0
   currentHP: 0
   invisFrameTime: 1.2
@@ -3556,6 +3557,14 @@ MonoBehaviour:
   - {fileID: 1372668417}
   - {fileID: 1463880182}
   holdingHand: {fileID: 607461819}
+  lvlToLoad: 
+  clipToStop: 
+  amuletHPBoost: 0
+  amuletSpeedBoost: 0
+  amuletStealthBoost: 0
+  hasHealthAmulet: 0
+  hasSpeedAmulet: 0
+  hasStealthAmulet: 0
   invIndex: 0
   equippedItem: {fileID: 0}
   currentItem: {fileID: 0}

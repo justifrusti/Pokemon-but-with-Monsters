@@ -4,31 +4,45 @@ using UnityEngine;
 
 public class Grids : MonoBehaviour
 {
-    public bool generateGrid;
-
-    public Vector2Int gridSize;
+    public DungeonGenerator generator;
+    public Vector2 gridSize;
     public Vector3 nodeSize;
-    [Space]
+    public bool calculateGridSizeBasedOnIslandFormat;
+    public Node[,] nodes;
     public LayerMask unwalkable;
     public GameObject loadingScreen;
 
-    public Node[,] nodes;
-
-    private void Update()
+    public void CreateGrid(DungeonGenerator n_generator)
     {
-        if(generateGrid)
+        generator = n_generator;
+
+        if (calculateGridSizeBasedOnIslandFormat)
         {
-            generateGrid = false;
-
-            CreateGrid();
+            gridSize.x = (generator.size.x * generator.offset.x) / nodeSize.x;
+            gridSize.y = (generator.size.y * generator.offset.y) / nodeSize.z;
         }
-    }
 
-    public void CreateGrid()
-    {
-        nodes = new Node[gridSize.x + 2, gridSize.y + 2];
+        nodes = new Node[Mathf.RoundToInt(gridSize.x + 2), Mathf.RoundToInt(gridSize.y + 2)];
 
-        StartCoroutine(GenerateNodesCoroutine());
+        //StartCoroutine(GenerateNodesCoroutine());
+
+        //for-loop that does the same as the Coroutine, but freezes the game
+        //   vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+        for (int i = 0; i < gridSize.x + 2; i++)
+        {
+            for (int j = 0; j < gridSize.y + 2; j++)
+            {
+                Vector3 newPosition;
+                bool newWalkable;
+                newPosition.x = i * nodeSize.x;
+                newPosition.y = transform.position.y;
+                newPosition.z = j * nodeSize.y;
+                newWalkable = IsNodeWalkable(newPosition);
+                newPosition.y = FindHeight(newPosition);
+                nodes[i, j] = new(newPosition, newWalkable);
+            }
+        }
     }
 
     IEnumerator GenerateNodesCoroutine()
@@ -39,21 +53,20 @@ public class Grids : MonoBehaviour
             {
                 Vector3 newPosition;
                 bool newWalkable;
-
                 newPosition.x = i * nodeSize.x;
                 newPosition.y = transform.position.y;
                 newPosition.z = j * nodeSize.y;
                 newWalkable = IsNodeWalkable(newPosition);
                 newPosition.y = FindHeight(newPosition);
-
                 nodes[i, j] = new Node(newPosition, newWalkable);
             }
 
+            // Yield after each iteration to allow the game to continue running
             yield return new WaitForEndOfFrame();
         }
 
+        // Execution completed
         Debug.Log("Nodes generation completed");
-
         StartCoroutine(GetNeighoursCoroutine());
     }
 
@@ -67,12 +80,9 @@ public class Grids : MonoBehaviour
                 nodes[i, j].gCost = 9999;
                 nodes[i, j].hCost = 9999;
             }
-
             yield return new WaitForEndOfFrame();
         }
-
         Debug.Log("Nodes neighbouring completed");
-
         //loadingScreen.SetActive(false);
     }
 
@@ -83,13 +93,11 @@ public class Grids : MonoBehaviour
 
         List<Node> openSet = new();
         HashSet<Node> closedSet = new();
-
         openSet.Add(startNode);
 
         while (openSet.Count > 0)
         {
             Node currentNode = openSet[0];
-
             for (int i = 1; i < openSet.Count; i++)
             {
                 if (openSet[i].FCost < currentNode.FCost || (openSet[i].FCost == currentNode.FCost && openSet[i].hCost < currentNode.hCost))
@@ -186,7 +194,6 @@ public class Grids : MonoBehaviour
     {
         float distanceToCurrentClosest = 9999;
         Vector2 index;
-
         index.x = 0;
         index.y = 0;
 
@@ -201,7 +208,6 @@ public class Grids : MonoBehaviour
                 }
             }
         }
-
         return nodes[Mathf.RoundToInt(index.x), Mathf.RoundToInt(index.y)];
     }
 
@@ -209,7 +215,6 @@ public class Grids : MonoBehaviour
     {
         Vector3 nodeApos = nodeA.position;
         Vector3 nodeBpos = nodeB.position;
-
         nodeApos.y = 0;
         nodeBpos.y = 0;
 
@@ -219,7 +224,6 @@ public class Grids : MonoBehaviour
     public Node RandomNode()
     {
         List<Node> walkableNodes = new() { };
-
         for (int i = 0; i <= gridSize.x + 1; i++)
         {
             for (int j = 0; j <= gridSize.y + 1; j++)
@@ -236,9 +240,6 @@ public class Grids : MonoBehaviour
 
     public void OnDrawGizmos()
     {
-        Vector3 s = new Vector3(gridSize.x, nodeSize.y, gridSize.y);
-        Gizmos.DrawWireCube(transform.position, s);
-
         if (nodes == null)
         {
             return;
@@ -256,7 +257,6 @@ public class Grids : MonoBehaviour
                 {
                     Gizmos.color = Color.red;
                 }
-
                 Gizmos.DrawCube(nodes[i, j].position, nodeSize);
             }
         }
@@ -267,10 +267,8 @@ public class Node
 {
     public Vector3 position;
     public bool walkable;
-
     public float gCost;
     public float hCost;
-
     public Node parent;
     public List<Node> neighbors;
 
@@ -278,7 +276,6 @@ public class Node
     {
         position = n_position;
         walkable = n_walkable;
-
         neighbors = new List<Node>();
     }
 

@@ -54,8 +54,10 @@ public class ArtifactBehaviour : MonoBehaviour
     [Space]
     public List<Transform> enemies;
     [Space]
-    public Color detectorStartCol;
-    public Color detectorEndCol;
+    public Gradient detectorGradient;
+    public Material matToChange;
+    public Material matToChangeDetector;
+    public Light detectorLight;
 
     private Transform player;
     private PlayerController controller;
@@ -66,6 +68,8 @@ public class ArtifactBehaviour : MonoBehaviour
     [Header("Amulets")]
     public AmuletType amuletType;
 
+    [HideInInspector]public bool isEquiped;
+
     private void Start()
     {
         Initialize();
@@ -73,6 +77,14 @@ public class ArtifactBehaviour : MonoBehaviour
 
     private void Update()
     {
+        if (matToChange == null || matToChangeDetector == null)
+        {
+            if (artifactType == ArtifactType.Utility && utilityType == ArtifactUtilityType.MonsterDetector)
+            {
+                GameManager.instance.GetDetectorMat(matToChange, matToChangeDetector);
+            }
+        }
+
         if(controller.currentItem != null)
         {
             if (utilityType == ArtifactUtilityType.MonsterDetector)
@@ -93,6 +105,19 @@ public class ArtifactBehaviour : MonoBehaviour
                 if(dst < closestEnemyPos.GetComponent<EnemyBehaviour>().aggroRange)
                 {
                     float t = dst / closestEnemyPos.GetComponent<EnemyBehaviour>().aggroRange;
+
+                    if(t < closestEnemyPos.GetComponent<EnemyBehaviour>().aggroRange)
+                    {
+                        Color emissionColor = detectorGradient.Evaluate(t);
+
+                        matToChange.SetColor("_EmissionColor", emissionColor);
+                        matToChange.EnableKeyword("_EMISSION");
+
+                        matToChangeDetector.SetColor("_EmissionColor", emissionColor);
+                        matToChangeDetector.EnableKeyword("_EMISSION");
+
+                        detectorLight.color = emissionColor;
+                    }
                 }
             }
 
@@ -162,7 +187,33 @@ public class ArtifactBehaviour : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         controller = player.GetComponent<PlayerController>();
 
-        Invoke("RegisterEnemies", 5.0f);
+        if(artifactType == ArtifactType.Utility && utilityType == ArtifactUtilityType.MonsterDetector)
+        {
+            InitializedDetectorColor();
+
+            GameManager.instance.RegisterDetectorMat(matToChange, matToChangeDetector);
+        }
+
+        if(Time.timeSinceLevelLoad < 3.0f)
+        {
+            Invoke("RegisterEnemies", 5.0f);
+        }else
+        {
+            RegisterEnemies();
+        }
+    }
+
+    void InitializedDetectorColor()
+    {
+        Color emissionColor = new Color(0, 255, 0);
+
+        matToChange.SetColor("_EmissionColor", emissionColor);
+        matToChange.EnableKeyword("_EMISSION");
+
+        matToChangeDetector.SetColor("_EmissionColor", emissionColor);
+        matToChangeDetector.EnableKeyword("_EMISSION");
+
+        detectorLight.color = emissionColor;
     }
 
     private void OnDrawGizmosSelected()

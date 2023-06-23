@@ -40,7 +40,8 @@ public class ChestBehaviour : MonoBehaviour
                     {
                         int index = Random.Range(0, itemManager.items.Count);
 
-                        GameObject g = Instantiate(itemManager.items[index].itemObj, itemSpawnPoint.position, Quaternion.identity);
+                        Vector3 newSpawnPos = new Vector3(itemSpawnPoint.position.x, itemSpawnPoint.position.y + .15f, itemSpawnPoint.position.z);
+                        GameObject g = Instantiate(itemManager.items[index].itemObj, newSpawnPos, Quaternion.identity);
 
                         itemManager.items.RemoveAt(index);
 

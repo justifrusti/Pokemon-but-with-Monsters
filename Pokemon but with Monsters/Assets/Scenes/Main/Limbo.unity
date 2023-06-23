@@ -937,7 +937,7 @@ MonoBehaviour:
   m_VoxelSize: 0.16666667
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
-  m_BuildHeightMesh: 1
+  m_BuildHeightMesh: 0
 --- !u!114 &288964674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -956,7 +956,7 @@ MonoBehaviour:
   size: {x: 15, y: 15}
   sizeCap: 15
   startPos: 0
-  maxItterations: 10000
+  maxItterations: 100000
   rooms:
   - room: {fileID: 4020692570221459217, guid: 421ffe8e6139e9245aaacf362e6a03f4, type: 3}
     minPos: {x: 0, y: 0}
@@ -1049,7 +1049,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 298102813}
-  m_LocalRotation: {x: 0.25013265, y: 0.46381554, z: -0.13835226, w: 0.83855087}
+  m_LocalRotation: {x: 0.00002641226, y: 0.95827574, z: -0.28584552, w: 0.000088545115}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1707,9 +1707,9 @@ MonoBehaviour:
   holdingHand: {fileID: 957695690}
   lvlToLoad: Lust
   clipToStop: CaveAmbience
-  amuletHPBoost: 100
-  amuletSpeedBoost: 100
-  amuletStealthBoost: 100
+  amuletHPBoost: 20
+  amuletSpeedBoost: 5
+  amuletStealthBoost: 15
   hasHealthAmulet: 0
   hasSpeedAmulet: 0
   hasStealthAmulet: 0
@@ -2045,7 +2045,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277831357}
-  m_LocalRotation: {x: 0.29789326, y: 0.45510134, z: -0.1647694, w: 0.8227961}
+  m_LocalRotation: {x: 0.000031455445, y: 0.9402716, z: -0.34042525, w: 0.000086881526}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2301,7 +2301,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382057730}
-  m_LocalRotation: {x: 0.27404696, y: 0.4596627, z: -0.15157965, w: 0.8310428}
+  m_LocalRotation: {x: 0.00002893744, y: 0.9496957, z: -0.31317428, w: 0.00008775231}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2562,7 +2562,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1531289260}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.541236, y: 2.5, z: -1.5944029}
+  m_LocalPosition: {x: -0.0005544027, y: 2.5, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2780,6 +2780,58 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1789282200
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1789282202}
+  - component: {fileID: 1789282201}
+  m_Layer: 0
+  m_Name: Pathfinder
+  m_TagString: Pathfinder
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1789282201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789282200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7044e5f8d46273947a6eca40ebb0513e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generator: {fileID: 288964674}
+  gridSize: {x: 100, y: 100}
+  nodeSize: {x: 0.5, y: 0.5, z: 0.5}
+  calculateGridSizeBasedOnIslandFormat: 1
+  unwalkable:
+    serializedVersion: 2
+    m_Bits: 64
+  loadingScreen: {fileID: 0}
+--- !u!4 &1789282202
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1789282200}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1816254017
 GameObject:
   m_ObjectHideFlags: 0
@@ -2862,7 +2914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 579519848}
-  audioToPlay: Music
+  audioToPlay: CaveAmbience
 --- !u!1 &2027564003
 GameObject:
   m_ObjectHideFlags: 3

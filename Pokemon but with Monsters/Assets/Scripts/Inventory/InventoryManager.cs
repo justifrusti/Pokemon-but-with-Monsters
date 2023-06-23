@@ -134,6 +134,7 @@ public class InventoryManager : MonoBehaviour
 
         manager.pc.equippedItem = Instantiate(manager.pc.invSlots[slotToEquip].currentItem.itemObj, manager.pc.holdingHand);
         manager.pc.equippedItem.name = manager.pc.invSlots[slotToEquip].currentItem.itemName;
+        manager.pc.equippedItem.GetComponent<ArtifactBehaviour>().isEquiped = true;
 
         EquipSettings();
 

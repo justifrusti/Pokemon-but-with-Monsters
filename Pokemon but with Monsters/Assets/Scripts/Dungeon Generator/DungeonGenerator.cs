@@ -128,6 +128,7 @@ public class DungeonGenerator : MonoBehaviour
 
             case GenerationState.Finished:
                 navMeshSurface.BuildNavMesh();
+                //grid.CreateGrid(this);
 
                 EnemySpawner.instance.SpawnEnemies();
 
@@ -137,8 +138,6 @@ public class DungeonGenerator : MonoBehaviour
                 {
                     enemy.GetComponent<EnemyBehaviour>().navMeshBuild = true;
                 }
-
-                //grid.CreateGrid();
 
                 generationState = GenerationState.Disabled;
                 break;
