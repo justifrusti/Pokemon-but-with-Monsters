@@ -47,7 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   disableObj: {fileID: 4436035784367654130}
-  disableRange: 20
+  disableRange: 30
+  isRemovable: 0
 --- !u!1 &4436035784367654130
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,4 +7,6 @@ public class ItemManager : MonoBehaviour
     public List<Item> items;
 
     public Item orb;
+
+    public int ammountOfItems = 0;
 }

@@ -34,16 +34,18 @@ public class ChestBehaviour : MonoBehaviour
         switch(chestType)
         {
             case ChestType.Area:
-                if (itemManager.items.Count != 0)
+                if (itemManager.items.Count != 0 && itemManager.ammountOfItems < 4)
                 {
-                    if(Random.value < .2f)
+                    if(Random.value < .05f)
                     {
                         int index = Random.Range(0, itemManager.items.Count);
 
-                        Vector3 newSpawnPos = new Vector3(itemSpawnPoint.position.x, itemSpawnPoint.position.y + .15f, itemSpawnPoint.position.z);
+                        Vector3 newSpawnPos = new Vector3(itemSpawnPoint.position.x, itemSpawnPoint.position.y + .1f, itemSpawnPoint.position.z);
                         GameObject g = Instantiate(itemManager.items[index].itemObj, newSpawnPos, Quaternion.identity);
 
                         itemManager.items.RemoveAt(index);
+
+                        itemManager.ammountOfItems++;
 
                         if (g.GetComponent<ItemRef>().item.destroyChestAroundArtifact)
                         {

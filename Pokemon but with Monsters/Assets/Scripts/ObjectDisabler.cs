@@ -10,8 +10,6 @@ public class ObjectDisabler : MonoBehaviour
 
     public float disableRange;
 
-    public bool isRemovable;
-
     // Start is called before the first frame update
     void Start()
     {

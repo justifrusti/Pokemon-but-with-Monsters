@@ -66,6 +66,9 @@ public class PlayerController : MonoBehaviour
     public float amuletSpeedBoost;
     public float amuletStealthBoost;
 
+    [Header("Misc")]
+    public GameObject minimapUI;
+
     //Privates
     private Rigidbody rb;
     private float speed;
@@ -557,6 +560,8 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
+        minimapUI.SetActive(false);
+
         rb.constraints = RigidbodyConstraints.None;
         rb.velocity = Vector3.zero;
 

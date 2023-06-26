@@ -1714,6 +1714,7 @@ MonoBehaviour:
   amuletHPBoost: 20
   amuletSpeedBoost: 5
   amuletStealthBoost: 15
+  minimapUI: {fileID: 1402051728}
   hasHealthAmulet: 0
   hasSpeedAmulet: 0
   hasStealthAmulet: 0
@@ -2974,6 +2975,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 12171f65dbfb3e4498d09a66bb2124a9, type: 2}
   - {fileID: 11400000, guid: 45a0f550c9c28c04295efb004e628097, type: 2}
   orb: {fileID: 11400000, guid: f94a97f3782b4b847bbc8f940a71b6fa, type: 2}
+  ammountOfItems: 0
 --- !u!114 &1816254021
 MonoBehaviour:
   m_ObjectHideFlags: 0
