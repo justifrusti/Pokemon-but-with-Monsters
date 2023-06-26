@@ -2,11 +2,11 @@ using Pathfinding;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Profiling;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(AIDestinationSetter))]
+[RequireComponent(typeof(AIPath))]
+[RequireComponent(typeof(Seeker))]
 public class EnemyBehaviour : MonoBehaviour
 {
     public enum EnemyState
@@ -21,13 +21,15 @@ public class EnemyBehaviour : MonoBehaviour
     public enum EnemyType
     {
         None,
-        Death
+        Death,
+        Fire
     }
 
     public enum Enemy
     {
         FleshBlob,
-        WheepingAngel
+        WheepingAngel,
+        Hellspore
     }
 
     public EnemyType type;
@@ -37,14 +39,12 @@ public class EnemyBehaviour : MonoBehaviour
     public Transform target;
     public float pathRefreshRate = 1.0f;
     [Space]
+    public int damage;
     public int maxHP;
     public float invisFrameTime;
     [Space]
     public float speed = 5;
-    [Tooltip("Keep this a minimum of 2X of the speed.")]public float acceleration = 10;
-    public float obstacleAvoidanceRadius = .5f;
-    public float dstThreshold;
-    [Tooltip("The desired distance the Enemy keeps from the player when following")]public float stoppingDst;
+    [Tooltip("The distance required to trigger a new point or action")]public float dstThreshold;
     [Space]
     public float aggroRange;
     public float followRange;
@@ -383,57 +383,13 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    /*private void FindPath()
+    private void OnCollisionEnter(Collision collision)
     {
-        Profiler.BeginSample($"Finding path");
-
-        switch (behaviourState)
+        if(collision.gameObject.CompareTag("Player"))
         {
-            case EnemyState.Captured:
-                path = grid.FindPath(transform.position, player.transform.position);
-                transform.transform.LookAt(player.transform);
-                break;
-
-            case EnemyState.Following:
-                path = grid.FindPath(transform.position, player.transform.position);
-                transform.transform.LookAt(player.transform);
-                break;
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage(damage);
         }
-
-        Profiler.EndSample();
-
-        *//*if (enemyType == EnemyTypes.flyEnemy)
-        {
-            Profiler.BeginSample("Lifting path up in the air for flying enemies");
-            float averageHeight = 0;
-            foreach (Vector3 waypoint in path)
-            {
-                averageHeight += waypoint.y;
-            }
-
-            averageHeight /= path.Count;
-
-            for (int i = 0; i < path.Count; i++)
-            {
-                if (path[i].y > averageHeight)
-                {
-                    averageHeight = path[i].y + (flyEnemyFlightHeight / 3);
-                }
-            }
-
-            for (int i = 0; i < path.Count; i++)
-            {
-                //path[i] = new Vector3(path[i].x, averageHeight + flyEnemyFlightHeight, path[i].z);
-                Vector3 newWaypoint;
-                newWaypoint.x = path[i].x;
-                newWaypoint.y = averageHeight + flyEnemyFlightHeight;
-                newWaypoint.z = path[i].z;
-                path[i] = newWaypoint;
-            }
-
-            Profiler.EndSample();
-        }*//*
-    }*/
+    }
 
     void InitializeUnit()
     {
@@ -458,10 +414,8 @@ public class EnemyBehaviour : MonoBehaviour
             pathSetter = GetComponent<AIDestinationSetter>();
         }
 
-        //agent.speed = speed;
-        //agent.radius = obstacleAvoidanceRadius;
-        //agent.acceleration = acceleration;
-        //agent.autoBraking = false;
+        GetComponent<AIPath>().maxSpeed = speed;
+        GetComponent<AIPath>().slowdownDistance = dstThreshold;
     }
 
     private void OnDrawGizmosSelected()

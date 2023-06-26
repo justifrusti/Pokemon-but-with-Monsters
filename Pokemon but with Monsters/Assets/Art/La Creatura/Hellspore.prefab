@@ -10,7 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5396626735142341851}
   - component: {fileID: 5396626735142341850}
-  m_Layer: 0
+  - component: {fileID: 3215672970157368545}
+  - component: {fileID: 3292203440262921258}
+  - component: {fileID: 2833490866472392137}
+  - component: {fileID: 6694409961068688496}
+  - component: {fileID: 3260468282120452122}
+  m_Layer: 8
   m_Name: Hellspore
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -31,7 +36,7 @@ Transform:
   m_Children:
   - {fileID: 5579416853807673232}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &5396626735142341850
 BoxCollider:
@@ -54,6 +59,150 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6010027, y: 1.4113078, z: 0.55255413}
   m_Center: {x: 0.007748127, y: 0.2056539, z: 0.014765739}
+--- !u!54 &3215672970157368545
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5396626735142341853}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!114 &3292203440262921258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5396626735142341853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9679e68a0f1144e79c664d9a11ca121, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  target: {fileID: 0}
+--- !u!114 &2833490866472392137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5396626735142341853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea053e639c782de4191d837eb70ffa86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 1
+  behaviourState: 0
+  behaviour: 2
+  target: {fileID: 0}
+  pathRefreshRate: 1
+  damage: 10
+  maxHP: 100
+  invisFrameTime: 0.2
+  speed: 3
+  acceleration: 10
+  dstThreshold: 0.6
+  stoppingDst: 4
+  aggroRange: 40
+  followRange: 20
+  aggroUpdateSpeed: 1
+  isTamable: 1
+  roamingPoints: []
+  aggroPoints: []
+  navMeshBuild: 0
+  inView: 0
+  canInvokeInvisReset: 1
+--- !u!114 &6694409961068688496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5396626735142341853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 1
+  drawGizmos: 1
+  detailedGizmos: 0
+  startEndModifier:
+    addPoints: 0
+    exactStartPoint: 3
+    exactEndPoint: 3
+    useRaycasting: 0
+    mask:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    useGraphRaycasting: 0
+  traversableTags: -1
+  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  graphMask:
+    value: -1
+--- !u!114 &3260468282120452122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5396626735142341853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
+  radius: 0.25
+  height: 0.9
+  canMove: 1
+  maxSpeed: 3
+  gravity: {x: NaN, y: NaN, z: NaN}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  centerOffsetCompatibility: NaN
+  repathRateCompatibility: NaN
+  canSearchCompability: 0
+  orientation: 0
+  enableRotation: 1
+  autoRepath:
+    mode: 2
+    interval: 0.5
+    sensitivity: 10
+    maximumInterval: 2
+    visualizeSensitivity: 1
+  targetCompatibility: {fileID: 0}
+  maxAcceleration: -2.5
+  rotationSpeed: 1000
+  slowdownDistance: 0.6
+  pickNextWaypointDist: 2
+  endReachedDistance: 0.2
+  alwaysDrawGizmos: 0
+  slowWhenNotFacingTarget: 1
+  whenCloseToDestination: 0
+  constrainInsideGraph: 0
 --- !u!1001 &5396626734776174715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -127,6 +276,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hellspore
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 30e1358c39f4974468dd17b929e32e57,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -180,10 +334,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5579416853807673232}
     m_Modifications:
+    - target: {fileID: 2425788562706067704, guid: d216e2cd47d798e4e99279c3995460ea,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3167469676331367436, guid: d216e2cd47d798e4e99279c3995460ea,
         type: 3}
       propertyPath: m_Name
       value: TorchParticle
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167469676331367436, guid: d216e2cd47d798e4e99279c3995460ea,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4658104783349656981, guid: d216e2cd47d798e4e99279c3995460ea,
         type: 3}

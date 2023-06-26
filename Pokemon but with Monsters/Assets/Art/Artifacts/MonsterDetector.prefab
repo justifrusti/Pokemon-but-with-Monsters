@@ -90,7 +90,7 @@ MonoBehaviour:
   capturedEnemy: {fileID: 0}
   playerStartPos: {x: 0, y: 0, z: 0}
   utilityType: 2
-  utilityCheckTime: 1
+  utilityCheckTime: 0.5
   enemies: []
   detectorGradient:
     serializedVersion: 2
@@ -126,7 +126,15 @@ MonoBehaviour:
   matToChangeDetector: {fileID: 2100000, guid: 5c9db071cb617c2449b642d747ba309f, type: 2}
   detectorLight: {fileID: 336360473672450746}
   amuletType: 0
+  weaponType: 0
+  damage: 0
+  boomerangSpawnInstance: {fileID: 0}
+  throwForce: 0
   isEquiped: 0
+  rb: {fileID: 0}
+  canSpawnBoomerang: 1
+  isCopy: 0
+  startedDeleteSequence: 0
 --- !u!54 &3802501815748435950
 Rigidbody:
   m_ObjectHideFlags: 0

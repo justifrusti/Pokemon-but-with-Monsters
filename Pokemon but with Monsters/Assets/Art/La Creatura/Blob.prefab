@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4975595347988080288}
   - component: {fileID: 7817162994394596858}
   - component: {fileID: 1698888245972931294}
+  - component: {fileID: 3298270090701252019}
   m_Layer: 9
   m_Name: Blob
   m_TagString: Enemy
@@ -81,11 +82,11 @@ MonoBehaviour:
   behaviour: 0
   target: {fileID: 0}
   pathRefreshRate: 1
-  maxHP: 0
-  invisFrameTime: 0
+  damage: 10000000
+  maxHP: 1000000
+  invisFrameTime: 1000
   speed: 1
   acceleration: 4
-  obstacleAvoidanceRadius: 0.5
   dstThreshold: 3
   stoppingDst: 4
   aggroRange: 20
@@ -181,6 +182,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   target: {fileID: 0}
+--- !u!65 &3298270090701252019
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5317830900963783699}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 3, z: 5}
+  m_Center: {x: 0.00000011920929, y: 1.5, z: 0}
 --- !u!1001 &1308336261178733438
 PrefabInstance:
   m_ObjectHideFlags: 0

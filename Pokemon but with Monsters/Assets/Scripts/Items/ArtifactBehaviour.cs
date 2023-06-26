@@ -33,6 +33,12 @@ public class ArtifactBehaviour : MonoBehaviour
         Speed
     }
 
+    public enum WeaponType
+    {
+        None,
+        Boomerang
+    }
+
     public ArtifactType artifactType;
 
     public string artifactName;
@@ -68,7 +74,20 @@ public class ArtifactBehaviour : MonoBehaviour
     [Header("Amulets")]
     public AmuletType amuletType;
 
-    [HideInInspector]public bool isEquiped;
+    [Header("Weapon Artifact Settings")]
+    public WeaponType weaponType;
+    [Space]
+    public int damage;
+    [Space]
+    public GameObject boomerangSpawnInstance;
+    [Space]
+    public float throwForce;
+
+    [HideInInspector] public bool isEquiped = false;
+    [HideInInspector] public Rigidbody rb;
+    [HideInInspector] public bool canSpawnBoomerang = true;
+    [HideInInspector] public bool isCopy = false;
+    [HideInInspector] public bool startedDeleteSequence = false;
 
     private void Start()
     {
@@ -77,6 +96,13 @@ public class ArtifactBehaviour : MonoBehaviour
 
     private void Update()
     {
+        if (isCopy && !startedDeleteSequence)
+        {
+            startedDeleteSequence = true;
+
+            Invoke("DestroyArtifactAfterTime", 5.0f);
+        }
+
         if (matToChange == null || matToChangeDetector == null)
         {
             if (artifactType == ArtifactType.Utility && utilityType == ArtifactUtilityType.MonsterDetector)
@@ -100,7 +126,12 @@ public class ArtifactBehaviour : MonoBehaviour
                     currentUtilityCheckTime -= Time.deltaTime;
                 }
 
-                float dst = Vector3.Distance(player.position, closestEnemyPos.position);
+                float dst = 0;
+
+                if (closestEnemyPos != null)
+                {
+                    dst = Vector3.Distance(player.position, closestEnemyPos.position);
+                }
 
                 if(dst < closestEnemyPos.GetComponent<EnemyBehaviour>().aggroRange)
                 {
@@ -151,6 +182,21 @@ public class ArtifactBehaviour : MonoBehaviour
                     hasCapture = false;
                 }
             }
+
+            if(Input.GetButtonDown("LMB") && controller.currentItem.itemName == artifactName)
+            {
+                if(!isCopy)
+                {
+                    if (artifactType == ArtifactType.Weapon && weaponType == WeaponType.Boomerang)
+                    {
+                        GameObject boomerangInstance = Instantiate(boomerangSpawnInstance, player.GetComponent<PlayerController>().holdingHand.position, transform.rotation);
+                        boomerangInstance.GetComponent<ArtifactBehaviour>().isCopy = true;
+                        boomerangInstance.gameObject.AddComponent<Rigidbody>();
+
+                        boomerangInstance.GetComponent<ArtifactBehaviour>().ThrowBoomerang();
+                    }
+                }
+            }
         }
     }
 
@@ -182,10 +228,27 @@ public class ArtifactBehaviour : MonoBehaviour
         }
     }
 
+    public void ThrowBoomerang()
+    {
+        if(canSpawnBoomerang && isCopy)
+        {
+            canSpawnBoomerang = false;
+
+            rb = GetComponent<Rigidbody>();
+
+            rb.AddForce(-transform.forward * throwForce, ForceMode.Impulse);
+
+            Invoke("ResetSpawnBool", 1.5f);
+        }
+    }
+
     void Initialize()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         controller = player.GetComponent<PlayerController>();
+        rb = GetComponent<Rigidbody>();
+
+        canSpawnBoomerang = true;
 
         if(artifactType == ArtifactType.Utility && utilityType == ArtifactUtilityType.MonsterDetector)
         {
@@ -216,8 +279,37 @@ public class ArtifactBehaviour : MonoBehaviour
         detectorLight.color = emissionColor;
     }
 
+    public void ResetSpawnBool()
+    {
+        canSpawnBoomerang = true;
+    }
+
+    public void DestroyArtifactAfterTime()
+    {
+        DestroyObj();
+    }
+
+    public void DestroyObj()
+    {
+        Destroy(this.gameObject);
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, useRange);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (artifactType == ArtifactType.Weapon && weaponType == WeaponType.Boomerang)
+        {
+            if (isCopy)
+            {
+                if (other.gameObject.CompareTag("Enemy"))
+                {
+                    other.gameObject.GetComponent<EnemyBehaviour>().TakeDamage(damage);
+                }
+            }
+        }
     }
 }
