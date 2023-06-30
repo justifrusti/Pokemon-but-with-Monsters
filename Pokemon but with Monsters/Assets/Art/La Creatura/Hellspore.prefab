@@ -1,5 +1,68 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &368013971937780292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7386537647668648579}
+  m_Layer: 8
+  m_Name: BulletPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7386537647668648579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 368013971937780292}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2731241103940421968}
+  m_Father: {fileID: 5396626735142341851}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3567811515589032555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2731241103940421968}
+  m_Layer: 8
+  m_Name: BulletSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2731241103940421968
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3567811515589032555}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.35}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7386537647668648579}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5396626735142341853
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,12 +72,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5396626735142341851}
-  - component: {fileID: 5396626735142341850}
   - component: {fileID: 3215672970157368545}
   - component: {fileID: 3292203440262921258}
   - component: {fileID: 2833490866472392137}
   - component: {fileID: 6694409961068688496}
   - component: {fileID: 3260468282120452122}
+  - component: {fileID: 7510250190050974431}
   m_Layer: 8
   m_Name: Hellspore
   m_TagString: Enemy
@@ -30,35 +93,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5396626735142341853}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.089441, y: 0.551, z: 4.564058}
+  m_LocalPosition: {x: 9.089441, y: 0, z: 4.564058}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5579416853807673232}
+  - {fileID: 7386537647668648579}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5396626735142341850
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5396626735142341853}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.6010027, y: 1.4113078, z: 0.55255413}
-  m_Center: {x: 0.007748127, y: 0.2056539, z: 0.014765739}
 --- !u!54 &3215672970157368545
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -121,13 +164,18 @@ MonoBehaviour:
   maxHP: 100
   invisFrameTime: 0.2
   speed: 3
-  acceleration: 10
   dstThreshold: 0.6
-  stoppingDst: 4
   aggroRange: 40
   followRange: 20
   aggroUpdateSpeed: 1
   isTamable: 1
+  shootRange: 5
+  shootDelay: 1
+  shootForce: 100
+  shootBullet: {fileID: 3961745570763491830, guid: 8c99a1e0668456a4fa18087ea94e3445,
+    type: 3}
+  bulletPoint: {fileID: 2731241103940421968}
+  bulletRotPoint: {fileID: 7386537647668648579}
   roamingPoints: []
   aggroPoints: []
   navMeshBuild: 0
@@ -203,6 +251,27 @@ MonoBehaviour:
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 0
   constrainInsideGraph: 0
+--- !u!135 &7510250190050974431
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5396626735142341853}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.25
+  m_Center: {x: 0, y: 0.63, z: 0}
 --- !u!1001 &5396626734776174715
 PrefabInstance:
   m_ObjectHideFlags: 0

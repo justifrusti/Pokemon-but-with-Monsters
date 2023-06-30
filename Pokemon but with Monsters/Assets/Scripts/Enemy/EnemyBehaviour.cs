@@ -52,6 +52,16 @@ public class EnemyBehaviour : MonoBehaviour
     [Space]
     public bool isTamable;
 
+    [Header("Ranged Components")]
+    public float shootRange;
+    public float shootDelay;
+    public float shootForce;
+    [Space]
+    public GameObject shootBullet;
+    [Space]
+    public Transform bulletPoint;
+    [Tooltip("The point the bulletpoint rotates around for 360 degrees shooting")]public Transform bulletRotPoint;
+
     [HideInInspector] public List<Transform> roamingPoints;
     [HideInInspector] public List<Transform> aggroPoints;
     [HideInInspector] public bool navMeshBuild;
@@ -66,6 +76,7 @@ public class EnemyBehaviour : MonoBehaviour
     private List<Vector3> path;
     private float pathRefreshTimer = 0f;
     private AIDestinationSetter pathSetter;
+    private bool canShoot = true;
 
     private void Start()
     {
@@ -108,6 +119,8 @@ public class EnemyBehaviour : MonoBehaviour
             }
 
             MoveEnemy();
+
+            PlayerInShootRange();
         }
     }
 
@@ -344,6 +357,32 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
+    public void PlayerInShootRange()
+    {
+        float dstToPlayer = Vector3.Distance(player.position, transform.position);
+
+        if(dstToPlayer <= shootRange && canShoot)
+        {
+            canShoot = false;
+
+            StartCoroutine(Shoot());
+        }
+    }
+
+    IEnumerator Shoot()
+    {
+        bulletRotPoint.LookAt(player.position);
+
+        GameObject spawnedBullet = Instantiate(shootBullet, bulletPoint.position, Quaternion.identity);
+
+        spawnedBullet.GetComponent<Rigidbody>().AddForce(bulletPoint.forward * shootForce, ForceMode.Impulse);
+        spawnedBullet.GetComponent<EnemyBullet>().AssignMasterBehaviour(this);
+
+        yield return new WaitForSeconds(shootDelay);
+
+        canShoot = true;
+    }
+
     public void TakeDamage(int damage)
     {
         if (!invisFramesActive)
@@ -405,6 +444,11 @@ public class EnemyBehaviour : MonoBehaviour
             behaviourState = EnemyState.Roaming;
         }
 
+        if(behaviour == Enemy.Hellspore && !canShoot)
+        {
+            canShoot = true;
+        }
+
         previousBehaviourState = behaviourState;
 
         currentHP = maxHP;
@@ -424,5 +468,7 @@ public class EnemyBehaviour : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, aggroRange);
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, followRange);
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, shootRange);
     }
 }
