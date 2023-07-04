@@ -109,13 +109,19 @@ public class InventoryManager : MonoBehaviour
 
     public void DropItem()
     {
+        for (int i = 0; i < manager.pc.invSlots.Count; i++)
+        {
+            if (manager.pc.invSlots[i].currentItem != null)
+            {
+                AmuletCheck(manager.pc.invSlots[i].currentItem.itemObj);
+            }
+        }
+
         if (hand.currentItem != null)
         {
             currentInvItem = hand.currentItem.itemObj;
 
             Instantiate(currentInvItem, player.transform.position + (player.transform.forward * 2), transform.rotation);
-
-            AmuletCheck(currentInvItem);
 
             hand.RemoveItem();
             hand.GetComponent<Image>().sprite = defaultImg;

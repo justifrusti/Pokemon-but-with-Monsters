@@ -51,9 +51,9 @@ public class DungeonGenerator : MonoBehaviour
     public class RuleSet
     {
         public GameObject room;
-
+        [Space]
         public Vector2Int minPos, maxPos;
-
+        [Space]
         public bool mustBeSpawned;
         public bool obligatory;
         public bool isOneTimeUse;

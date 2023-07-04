@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Justins scene of random chaos.unity
-    guid: 8e4eb2d4b2c71a140bd2173e2833188e
+    path: Assets/Scenes/Main/Menus/MainMenu.unity
+    guid: 4b5ea8da88f05694f983a6f484174aa5
   - enabled: 1
     path: Assets/Scenes/Main/Lust.unity
     guid: 2a29fc4f5e46d28408a38ef9b8356ebc

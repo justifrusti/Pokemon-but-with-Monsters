@@ -14,8 +14,7 @@ public class EnemyBehaviour : MonoBehaviour
         Roaming,
         Following,
         Aggro,
-        Captured,
-        Forklift
+        Captured
     };
 
     public enum EnemyType
@@ -89,6 +88,11 @@ public class EnemyBehaviour : MonoBehaviour
     {
         pathSetter.target = target;
 
+        if(transform.position.y < -20)
+        {
+            transform.position = new Vector3(transform.position.x, 20, transform.position.z);
+        }
+
         if(navMeshBuild)
         {
             CheckEnemySpecificTrait();
@@ -97,12 +101,10 @@ public class EnemyBehaviour : MonoBehaviour
             {
                 previousBehaviourState = behaviourState;
 
-                CheckBehaviourSettings();
-
                 target = null;
             }
 
-            if(behaviourState != EnemyState.Forklift && behaviourState != EnemyState.Captured)
+            if(behaviourState != EnemyState.Captured)
             {
                 behaviourState = CheckAggroState();
                 behaviourState = CheckFollowState();
@@ -149,53 +151,12 @@ public class EnemyBehaviour : MonoBehaviour
                 {
                     target = player;
                 }
-
-                if(target != null)
-                {
-                    float dstToPlayer = Vector3.Distance(target.position, transform.position);
-
-                    if(dstToPlayer <= dstThreshold)
-                    {
-                        //agent.speed = 0;
-                        //agent.velocity = Vector3.zero;
-
-                        /*pathRefreshTimer += Time.deltaTime;
-
-                        if (pathRefreshTimer > pathRefreshRate)
-                        {
-                            pathRefreshTimer = 0;
-                            FindPath();
-                        }*/
-                    }
-                    else
-                    {
-                        if(behaviour != Enemy.WheepingAngel)
-                        {
-                            //agent.speed = speed;
-                        }
-                    }
-                }
                 break;
 
             case EnemyState.Captured:
                 if (target != player)
                 {
                     target = player;
-                }
-
-                if (target != null)
-                {
-                    float dstToPlayer = Vector3.Distance(target.position, transform.position);
-
-                    /*if (dstToPlayer <= agent.stoppingDistance)
-                    {
-                        agent.speed = 0;
-                        agent.velocity = Vector3.zero;
-                    }
-                    else
-                    {
-                        agent.speed = speed;
-                    }*/
                 }
                 break;
 
@@ -242,38 +203,7 @@ public class EnemyBehaviour : MonoBehaviour
                     }
                 }
                 break;
-
-            case EnemyState.Forklift:
-                if(target != player)
-                {
-                    target = player;
-                }
-
-                if (target != null)
-                {
-                    float dstToPlayer = Vector3.Distance(target.position, transform.position);
-
-                    if (dstToPlayer <= dstThreshold)
-                    {
-                        //agent.speed = 0;
-                        //agent.velocity = Vector3.zero;
-
-                        AudioManager.instance.PlayClip("ForkliftCertified");
-                    }
-                    else
-                    {
-                        //agent.speed = speed;
-                    }
-                }
-                break;
         }
-
-        /*if (target != null && !agent.pathPending && agent.remainingDistance < .5f)
-        {
-            Vector3 posV3 = new Vector3(target.position.x, transform.position.y, target.position.z);
-
-            agent.SetDestination(posV3);
-        }*/
     }
 
     EnemyState CheckAggroState()
@@ -308,28 +238,6 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    void CheckBehaviourSettings()
-    {
-        switch (behaviourState)
-        {
-            case EnemyState.Following:
-                //agent.stoppingDistance = 0;
-                break;
-
-            case EnemyState.Roaming:
-                //agent.stoppingDistance = 0;
-                break;
-
-            case EnemyState.Aggro:
-                //agent.stoppingDistance = 0;
-                break;
-
-            case EnemyState.Captured:
-                //agent.stoppingDistance = stoppingDst;
-                break;
-        }
-    }
-
     public void CheckCapture(ArtifactBehaviour.ArtifactElement element, ArtifactBehaviour behaviour)
     {
         if(isTamable)
@@ -359,13 +267,26 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void PlayerInShootRange()
     {
-        float dstToPlayer = Vector3.Distance(player.position, transform.position);
-
-        if(dstToPlayer <= shootRange && canShoot)
+        if(behaviourState != EnemyState.Captured)
         {
-            canShoot = false;
+            float dstToPlayer = Vector3.Distance(player.position, transform.position);
 
-            StartCoroutine(Shoot());
+            if (dstToPlayer <= shootRange && canShoot)
+            {
+                canShoot = false;
+
+                StartCoroutine(Shoot());
+            }
+        }else
+        {
+            float dstToEnemy = Vector3.Distance(player.position, transform.position);
+
+            if (dstToEnemy <= shootRange && canShoot)
+            {
+                canShoot = false;
+
+                StartCoroutine(Shoot());
+            }
         }
     }
 
@@ -439,10 +360,7 @@ public class EnemyBehaviour : MonoBehaviour
             roamingPoints.Add(rp.transform);
         }
 
-        if(behaviourState != EnemyState.Forklift)
-        {
-            behaviourState = EnemyState.Roaming;
-        }
+        behaviourState = EnemyState.Roaming;
 
         if(behaviour == Enemy.Hellspore && !canShoot)
         {

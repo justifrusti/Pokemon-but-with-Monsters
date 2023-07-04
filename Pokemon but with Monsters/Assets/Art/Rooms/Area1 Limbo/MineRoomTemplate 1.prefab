@@ -105,6 +105,72 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.000001, y: 3, z: 0.1414217}
   m_Center: {x: 0, y: 1.5, z: -0.000000040978204}
+--- !u!1 &475108951331989991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2010852417401120334}
+  - component: {fileID: 1957782142668160431}
+  - component: {fileID: 7169317568228987007}
+  m_Layer: 0
+  m_Name: Spawn
+  m_TagString: MonsterPoint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2010852417401120334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475108951331989991}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8954732722728880633}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1957782142668160431
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475108951331989991}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7169317568228987007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 475108951331989991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47c313f28efcb874fa917d199b1af8e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &525878856943004221
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,7 +841,6 @@ MonoBehaviour:
   player: {fileID: 0}
   disableObj: {fileID: 7926199592523051163}
   disableRange: 20
-  isRemovable: 1
 --- !u!1 &4083384788221250966
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,6 +906,7 @@ Transform:
   - {fileID: 5781738153787941979}
   - {fileID: 4607422915273130825}
   - {fileID: 6177043283267470784}
+  - {fileID: 2010852417401120334}
   m_Father: {fileID: 1875835360032083493}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -15,6 +15,7 @@ TagManager:
   - Unexplored
   - Prop
   - Managers
+  - MonsterPoint
   layers:
   - Default
   - TransparentFX

@@ -153,7 +153,15 @@ MonoBehaviour:
   matToChangeDetector: {fileID: 0}
   detectorLight: {fileID: 0}
   amuletType: 2
+  weaponType: 0
+  damage: 0
+  boomerangSpawnInstance: {fileID: 0}
+  throwForce: 0
   isEquiped: 0
+  rb: {fileID: 0}
+  canSpawnBoomerang: 1
+  isCopy: 0
+  startedDeleteSequence: 0
 --- !u!1001 &5051531703991520503
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -272,5 +280,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3792245, y: 0.009167518, z: 0.3967252}
-  m_Center: {x: -0.00051374733, y: -0.0000070012175, z: 0.00775443}
+  m_Size: {x: 0.37922448, y: 0.018747134, z: 0.4162564}
+  m_Center: {x: -0.0006863027, y: 0.00496401, z: 0.01869124}

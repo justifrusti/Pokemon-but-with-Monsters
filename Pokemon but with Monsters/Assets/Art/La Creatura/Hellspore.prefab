@@ -171,7 +171,7 @@ MonoBehaviour:
   isTamable: 1
   shootRange: 5
   shootDelay: 1
-  shootForce: 100
+  shootForce: 50
   shootBullet: {fileID: 3961745570763491830, guid: 8c99a1e0668456a4fa18087ea94e3445,
     type: 3}
   bulletPoint: {fileID: 2731241103940421968}
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 5
   radius: 0.25
-  height: 0.9
+  height: 1.75
   canMove: 1
   maxSpeed: 3
   gravity: {x: NaN, y: NaN, z: NaN}
@@ -271,7 +271,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.25
-  m_Center: {x: 0, y: 0.63, z: 0}
+  m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1001 &5396626734776174715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -293,7 +293,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 30e1358c39f4974468dd17b929e32e57,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.635
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 30e1358c39f4974468dd17b929e32e57,
         type: 3}

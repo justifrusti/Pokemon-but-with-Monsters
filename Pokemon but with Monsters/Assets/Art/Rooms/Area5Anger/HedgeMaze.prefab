@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 7413254817875412690}
   - component: {fileID: 6296657586513949784}
   - component: {fileID: 1627686254082649535}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: UnexploredBorder
   m_TagString: Unexplored
   m_Icon: {fileID: 0}
@@ -539,7 +539,7 @@ Transform:
   m_Children:
   - {fileID: 1022449239322039661}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5755103903964351668
 MonoBehaviour:

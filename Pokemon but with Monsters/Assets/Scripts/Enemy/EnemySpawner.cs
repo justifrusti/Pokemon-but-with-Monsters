@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public List<EnemyBehaviour> spawnableEnemies;
+    public EnemyBehaviour singleEnemySpawn;
 
     public static EnemySpawner instance;
 
@@ -34,10 +35,7 @@ public class EnemySpawner : MonoBehaviour
         {
             int spawnPointIndex = Random.Range(0, spawnPoints.Count);
 
-            Instantiate(spawnableEnemies[0].gameObject, spawnPoints[spawnPointIndex].position, Quaternion.identity);
-
-            spawnableEnemies.RemoveAt(0);
-            spawnPoints.RemoveAt(spawnPointIndex);
+            Instantiate(singleEnemySpawn.gameObject, spawnPoints[spawnPointIndex].position, Quaternion.identity);
         }else if(spawnableEnemies.Count > 1)
         {
             for (int i = 0; i < enemiesToSpawn; i++)
@@ -55,7 +53,7 @@ public class EnemySpawner : MonoBehaviour
 
     void RegisterPoints()
     {
-        foreach (GameObject item in GameObject.FindGameObjectsWithTag("RoamingPoint"))
+        foreach (GameObject item in GameObject.FindGameObjectsWithTag("MonsterPoint"))
         {
             spawnPoints.Add(item.transform);
         }

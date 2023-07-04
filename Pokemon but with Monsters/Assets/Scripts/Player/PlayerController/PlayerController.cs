@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -11,7 +12,8 @@ public class PlayerController : MonoBehaviour
     {
         Idle,
         Walking,
-        Running
+        Running,
+        Die
     }
 
     public ControllerData playerControlData;
@@ -66,8 +68,11 @@ public class PlayerController : MonoBehaviour
     public float amuletSpeedBoost;
     public float amuletStealthBoost;
 
-    [Header("Misc")]
+    [Header("UI")]
     public GameObject minimapUI;
+    public GameObject pauseMenu;
+    [Space]
+    public Slider hpBar;
 
     //Privates
     private Rigidbody rb;
@@ -83,6 +88,8 @@ public class PlayerController : MonoBehaviour
     private bool isLookingAtInteractable = false;
     private bool invisFramesActive = false;
     private bool canInvokeInvisReset = true;
+    private float originalTimescale;
+    private float originalSensitivity;
 
     [HideInInspector] public bool hasHealthAmulet;
     [HideInInspector] public bool hasSpeedAmulet;
@@ -94,6 +101,12 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool isWalking;
     [HideInInspector] public bool isRunning;
     [HideInInspector] public Vector3 teleporterPos, orbPos;
+    [HideInInspector] public bool isPaused = false;
+
+    private void Awake()
+    {
+        originalTimescale = Time.timeScale;
+    }
 
     private void Start()
     {
@@ -102,7 +115,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (playerControlData.canWalk && isWalking)
+        if (playerControlData.canWalk && isWalking && moveType != MoveType.Die)
         {
             Move();
         }
@@ -133,7 +146,17 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        CheckSpeed();
+        hpBar.value = currentHP;
+
+        if(hpBar.maxValue != maxHP)
+        {
+            hpBar.maxValue = maxHP;
+        }
+
+        if(moveType != MoveType.Die)
+        {
+            CheckSpeed();
+        }
 
         if(playerControlData.canLean && !isLookingAtInteractable)
         {
@@ -157,7 +180,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (playerControlData.lockMouseInEditor)
+        if (playerControlData.lockMouseInEditor && !isPaused)
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
@@ -175,7 +198,12 @@ public class PlayerController : MonoBehaviour
             Crouch();
         }
 
-        if(TeleporterBehaviour.inArea)
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            Pause();
+        }
+
+        if(TeleporterBehaviour.instance.inArea)
         {
             if(Input.GetButtonDown("Interact"))
             {
@@ -560,12 +588,44 @@ public class PlayerController : MonoBehaviour
 
     void Die()
     {
+        cmCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
+        cmCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
+
+        moveType = MoveType.Die;
+
         minimapUI.SetActive(false);
 
         rb.constraints = RigidbodyConstraints.None;
         rb.velocity = Vector3.zero;
 
         sensitivity = 0;
+    }
+
+    void Pause()
+    {
+        if(!isPaused)
+        {
+            Cursor.lockState = CursorLockMode.None;
+
+            Time.timeScale = 0;
+
+            sensitivity = 0;
+
+            pauseMenu.SetActive(true);
+            minimapUI.SetActive(false);
+        }else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+
+            Time.timeScale = originalTimescale;
+
+            sensitivity = originalSensitivity;
+
+            minimapUI.SetActive(true);
+            pauseMenu.SetActive(false);
+        }
+
+        isPaused = !isPaused;
     }
 
     void ResetInvisFrames()
@@ -582,9 +642,18 @@ public class PlayerController : MonoBehaviour
         if(hasHealthAmulet)
         {
             maxHP = maxHP + amuletHPBoost;
+            currentHP += amuletHPBoost;
         }else if(!hasHealthAmulet && behaviour.isEquiped)
         {
             maxHP = maxHP - amuletHPBoost;
+            
+            if(currentHP > amuletHPBoost)
+            {
+                currentHP -= amuletHPBoost;
+            }else
+            {
+                currentHP = 1;
+            }
         }
 
         if (hasSpeedAmulet && behaviour.isEquiped)
@@ -628,6 +697,8 @@ public class PlayerController : MonoBehaviour
 
     public void Initialize()
     {
+        GameManager.instance.pc = this;
+
         if (playerControlData == null)
         {
             Debug.LogError("No Control Data, Player Controller wont be working. Please create or assign a Control Data Asset");
@@ -686,9 +757,14 @@ public class PlayerController : MonoBehaviour
         speed = walkSpeed;
         currentHP = maxHP;
 
+        hpBar.maxValue = maxHP;
+
+        originalSensitivity = sensitivity;
+
         isWalking = false;
         isRunning = false;
         isGrounded = true;
+        isPaused = false;
 
         moveType = MoveType.Idle;
 

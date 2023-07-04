@@ -16,13 +16,17 @@ public class TeleporterBehaviour : MonoBehaviour
     private Transform player;
     public PlayerController controller;
 
-    public static bool inArea;
+    public static TeleporterBehaviour instance;
+
+    public bool inArea;
     private bool placedOrb = false;
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         controller = player.GetComponent<PlayerController>();
+
+        instance = this;
 
         orb.gameObject.SetActive(false);
 

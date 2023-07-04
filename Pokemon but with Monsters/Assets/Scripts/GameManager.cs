@@ -21,15 +21,20 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(pc == null)
-        {
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        }
-
         if(instance == null)
         {
             instance = this;
         }
+    }
+
+    public void Save()
+    {
+        SaveManager.Save(saveData);
+    }
+
+    public void Load()
+    {
+        SaveManager.Load();
     }
 
     public void RegisterDetectorMat(Material mat1,  Material mat2)
