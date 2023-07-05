@@ -209,6 +209,8 @@ public class PlayerController : MonoBehaviour
             {
                 AudioManager.instance.StopClip(clipToStop);
 
+                SaveData();
+
                 SceneManager.LoadScene(lvlToLoad);
             }    
         }
@@ -693,6 +695,68 @@ public class PlayerController : MonoBehaviour
                 eb.aggroRange += amuletStealthBoost;
             }
         }
+    }
+        
+    public void SaveData()
+    {
+        GameManager.instance.saveData.walkSpeed = walkSpeed;
+        GameManager.instance.saveData.runSpeed = runSpeed;
+        GameManager.instance.saveData.sensitivity = sensitivity;
+        GameManager.instance.saveData.turnSpeed = turnSpeed;
+        GameManager.instance.saveData.jumpForce = jumpForce;
+        GameManager.instance.saveData.pickupRange = pickupRange;
+        GameManager.instance.saveData.maxHP = maxHP;
+        GameManager.instance.saveData.currentHP = currentHP;
+        GameManager.instance.saveData.invisFrameTime = invisFrameTime;
+        GameManager.instance.saveData.leanAngle = leanAngle;
+        GameManager.instance.saveData.leanSpeed = leanSpeed;
+        GameManager.instance.saveData.crouchHeight = crouchHeight;
+        GameManager.instance.saveData.crouchSpeed = crouchSpeed;
+
+        GameManager.instance.saveData.invItem1 = invSlots[0].currentItem;
+        GameManager.instance.saveData.invItem2 = invSlots[1].currentItem;
+        GameManager.instance.saveData.invItem3 = invSlots[2].currentItem;
+
+        GameManager.instance.saveData.i1s = invSlots[0].sprite;
+        GameManager.instance.saveData.i2s = invSlots[1].sprite;
+        GameManager.instance.saveData.i3s = invSlots[2].sprite;
+
+        GameManager.instance.saveData.amuletHPBoost = amuletHPBoost;
+        GameManager.instance.saveData.amuletSpeedBoost = amuletSpeedBoost;
+        GameManager.instance.saveData.amuletStealthBoost = amuletStealthBoost;
+
+        GameManager.instance.Save();
+    }
+
+    public void LoadData()
+    {
+        GameManager.instance.Load();
+
+        walkSpeed = GameManager.instance.saveData.walkSpeed;
+        runSpeed = GameManager.instance.saveData.runSpeed;
+        sensitivity = GameManager.instance.saveData.sensitivity;
+        turnSpeed = GameManager.instance.saveData.turnSpeed;
+        jumpForce = GameManager.instance.saveData.jumpForce;
+        pickupRange = GameManager.instance.saveData.pickupRange;
+        maxHP = GameManager.instance.saveData.maxHP;
+        currentHP = GameManager.instance.saveData.currentHP;
+        invisFrameTime = GameManager.instance.saveData.invisFrameTime;
+        leanAngle = GameManager.instance.saveData.leanAngle;
+        leanSpeed = GameManager.instance.saveData.leanSpeed;
+        crouchHeight = GameManager.instance.saveData.crouchHeight;
+        crouchSpeed = GameManager.instance.saveData.crouchSpeed;
+
+        invSlots[0].currentItem = GameManager.instance.saveData.invItem1;
+        invSlots[1].currentItem = GameManager.instance.saveData.invItem2;
+        invSlots[2].currentItem = GameManager.instance.saveData.invItem3;
+
+        invSlots[0].sprite = GameManager.instance.saveData.i1s;
+        invSlots[1].sprite = GameManager.instance.saveData.i2s;
+        invSlots[2].sprite = GameManager.instance.saveData.i3s;
+
+        amuletHPBoost = GameManager.instance.saveData.amuletHPBoost;
+        amuletSpeedBoost = GameManager.instance.saveData.amuletSpeedBoost;
+        amuletStealthBoost = GameManager.instance.saveData.amuletStealthBoost;
     }
 
     public void Initialize()

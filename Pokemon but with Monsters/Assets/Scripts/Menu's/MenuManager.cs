@@ -10,6 +10,8 @@ public class MenuManager : MonoBehaviour
 {
     public bool includeSettings;
 
+    public string lvlToInitialize;
+
     [Header("Settings Menu")]
     public int width;
     public int height;
@@ -35,21 +37,23 @@ public class MenuManager : MonoBehaviour
     public Slider musicVolS;
     public Slider sfxVolS;
 
-    private GameManager manager;
-
     private void Start()
     {
-        manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-
         if(includeSettings)
         {
             GetResolutions();
+            
+            LoadSettings();
         }
     }
 
     public void ContinueGame()
     {
         Cursor.lockState = CursorLockMode.Locked;
+
+        lvlToInitialize = GameManager.instance.saveData.continueLvl;
+
+        LoadLevel(lvlToInitialize);
     }
 
     public void Quit()
@@ -139,37 +143,42 @@ public class MenuManager : MonoBehaviour
 
     public void LoadLevel(string levelName)
     {
+        GameManager.instance.Save();
+
         SceneManager.LoadScene(levelName);
     }
 
     public void SaveSettings()
     {
-        manager.saveData.width = width;
-        manager.saveData.height = height;
-        manager.saveData.resolutionIndex = resolutionIndex;
-        manager.saveData.masterVolume = masterVolume;
-        manager.saveData.musicVolume = musicVolume;
-        manager.saveData.sfxVolume = sfxVolume;
-        manager.saveData.isFullscreen = isFullscreen;
-        manager.saveData.vSync = vSync;
+        GameManager.instance.saveData.width = width;
+        GameManager.instance.saveData.height = height;
+        GameManager.instance.saveData.resolutionIndex = resolutionIndex;
+        GameManager.instance.saveData.masterVolume = masterVolume;
+        GameManager.instance.saveData.musicVolume = musicVolume;
+        GameManager.instance.saveData.sfxVolume = sfxVolume;
+        GameManager.instance.saveData.isFullscreen = isFullscreen;
+        GameManager.instance.saveData.vSync = vSync;
+        GameManager.instance.saveData.continueLvl = lvlToInitialize;
 
-        manager.Save();
+        GameManager.instance.Save();
     }
 
     public void LoadSettings()
     {
-        manager.Load();
+        GameManager.instance.Load();
 
-        width = manager.saveData.width;
-        height = manager.saveData.height;
-        resolutionIndex = manager.saveData.resolutionIndex;
+        width = GameManager.instance.saveData.width;
+        height = GameManager.instance.saveData.height;
+        resolutionIndex = GameManager.instance.saveData.resolutionIndex;
 
-        masterVolume = manager.saveData.masterVolume;
-        musicVolume = manager.saveData.musicVolume;
-        sfxVolume = manager.saveData.sfxVolume;
+        masterVolume = GameManager.instance.saveData.masterVolume;
+        musicVolume = GameManager.instance.saveData.musicVolume;
+        sfxVolume = GameManager.instance.saveData.sfxVolume;
 
-        isFullscreen = manager.saveData.isFullscreen;
-        vSync = manager.saveData.vSync;
+        isFullscreen = GameManager.instance.saveData.isFullscreen;
+        vSync = GameManager.instance.saveData.vSync;
+
+        lvlToInitialize = GameManager.instance.saveData.continueLvl;
 
         ApplySettings();
     }
@@ -183,6 +192,6 @@ public class MenuManager : MonoBehaviour
         musicVolS.value = musicVolume;
         sfxVolS.value = sfxVolume;
 
-        resolutionDropdown.value = resolutionIndex;
+        SetResolution(resolutionIndex);
     }
 }

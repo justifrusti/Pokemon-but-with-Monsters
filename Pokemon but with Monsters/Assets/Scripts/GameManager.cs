@@ -34,7 +34,12 @@ public class GameManager : MonoBehaviour
 
     public void Load()
     {
-        SaveManager.Load();
+        saveData = SaveManager.Load();
+    }
+
+    public void Delete()
+    {
+        SaveManager.DeleteData();
     }
 
     public void RegisterDetectorMat(Material mat1,  Material mat2)

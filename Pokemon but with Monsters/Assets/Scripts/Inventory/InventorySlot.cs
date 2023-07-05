@@ -7,7 +7,7 @@ public class InventorySlot : MonoBehaviour
 {
     public Item currentItem;
 
-    Sprite sprite;
+    public Sprite sprite;
 
     private void Start()
     {

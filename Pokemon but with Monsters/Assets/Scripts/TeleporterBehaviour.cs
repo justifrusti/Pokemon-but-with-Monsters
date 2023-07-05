@@ -61,6 +61,9 @@ public class TeleporterBehaviour : MonoBehaviour
             {
                 Debug.Log("YOU... SHALL... NOT... PASSSSSSSSSS!!!!!!!");
             }
+        }else
+        {
+            inArea = false;
         }
     }
 }
