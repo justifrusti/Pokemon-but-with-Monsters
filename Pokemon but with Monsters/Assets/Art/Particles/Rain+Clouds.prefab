@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1799098162625602868}
+  - component: {fileID: 8423538477145521478}
+  - component: {fileID: 8875792689319238352}
   m_Layer: 0
   m_Name: Rain+Clouds
   m_TagString: Untagged
@@ -31,8 +33,38 @@ Transform:
   - {fileID: 6413411349683209642}
   - {fileID: 4438678346270451007}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8423538477145521478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122400479774305043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a13940cc87907a469756588f181db1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  disableObj: {fileID: 8636767747104181869}
+  disableRange: 30
+--- !u!114 &8875792689319238352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122400479774305043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a13940cc87907a469756588f181db1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  disableObj: {fileID: 726623731914328298}
+  disableRange: 30
 --- !u!1001 &6888185384562584826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -106,6 +138,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d4ece0e6e822564f9b9ce798a708167, type: 3}
+--- !u!1 &726623731914328298 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6161694444517893136, guid: 1d4ece0e6e822564f9b9ce798a708167,
+    type: 3}
+  m_PrefabInstance: {fileID: 6888185384562584826}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4438678346270451007 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7065754657868007877, guid: 1d4ece0e6e822564f9b9ce798a708167,
@@ -188,6 +226,12 @@ PrefabInstance:
 --- !u!4 &6413411349683209642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2580612000164385881, guid: d2eb3ffa8fde9d84a8d542ce5c818b1a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8849906787373748723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8636767747104181869 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 939802977639145374, guid: d2eb3ffa8fde9d84a8d542ce5c818b1a,
     type: 3}
   m_PrefabInstance: {fileID: 8849906787373748723}
   m_PrefabAsset: {fileID: 0}

@@ -171,7 +171,7 @@ MonoBehaviour:
   isTamable: 1
   shootRange: 5
   shootDelay: 1
-  shootForce: 50
+  shootForce: 10
   shootBullet: {fileID: 3961745570763491830, guid: 8c99a1e0668456a4fa18087ea94e3445,
     type: 3}
   bulletPoint: {fileID: 2731241103940421968}

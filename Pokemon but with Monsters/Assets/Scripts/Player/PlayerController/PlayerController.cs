@@ -723,14 +723,6 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.instance.saveData.maxHP = maxHP;
 
-        GameManager.instance.saveData.invItem1 = invSlots[0].currentItem;
-        GameManager.instance.saveData.invItem2 = invSlots[1].currentItem;
-        GameManager.instance.saveData.invItem3 = invSlots[2].currentItem;
-
-        GameManager.instance.saveData.i1s = invSlots[0].sprite;
-        GameManager.instance.saveData.i2s = invSlots[1].sprite;
-        GameManager.instance.saveData.i3s = invSlots[2].sprite;
-
         GameManager.instance.Save();
     }
 
@@ -739,14 +731,6 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.Load();
 
         maxHP = GameManager.instance.saveData.maxHP;
-
-        invSlots[0].currentItem = GameManager.instance.saveData.invItem1;
-        invSlots[1].currentItem = GameManager.instance.saveData.invItem2;
-        invSlots[2].currentItem = GameManager.instance.saveData.invItem3;
-
-        invSlots[0].sprite = GameManager.instance.saveData.i1s;
-        invSlots[1].sprite = GameManager.instance.saveData.i2s;
-        invSlots[2].sprite = GameManager.instance.saveData.i3s;
     }
 
     public void Initialize()

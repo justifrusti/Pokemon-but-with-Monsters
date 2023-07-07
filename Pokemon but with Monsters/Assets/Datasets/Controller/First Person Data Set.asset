@@ -21,7 +21,7 @@ MonoBehaviour:
   canJump: 0
   canInteract: 1
   canLean: 0
-  canCrouch: 1
+  canCrouch: 0
   canLookLeftAndRight: 1
   canLookUpAndDown: 1
   camClamped: 0

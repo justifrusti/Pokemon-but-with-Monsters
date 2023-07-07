@@ -25,13 +25,4 @@ public class SaveData
 
     [Header("Health")]
     public int maxHP = 100;
-
-    [Header("Inventory")]
-    public Item invItem1;
-    public Item invItem2;
-    public Item invItem3;
-
-    public Sprite i1s;
-    public Sprite i2s;
-    public Sprite i3s;
 }
