@@ -368,8 +368,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4926743203062472610}
   - {fileID: 1241217371070629760}
+  - {fileID: 4926743203062472610}
   - {fileID: 8712554404379616574}
   - {fileID: 2766733847472346706}
   m_Father: {fileID: 30540039993897389}
@@ -878,7 +878,8 @@ PrefabInstance:
       value: WallViolence (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 856809498507964436, guid: 69fcd1a347342834582028b64aa43389, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69fcd1a347342834582028b64aa43389, type: 3}
@@ -963,7 +964,8 @@ PrefabInstance:
       value: WallViolence (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1695668143849975228, guid: 69fcd1a347342834582028b64aa43389, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69fcd1a347342834582028b64aa43389, type: 3}
@@ -1142,7 +1144,8 @@ PrefabInstance:
       value: WallViolence
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 856809498507964436, guid: 69fcd1a347342834582028b64aa43389, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69fcd1a347342834582028b64aa43389, type: 3}
@@ -1227,7 +1230,8 @@ PrefabInstance:
       value: WallViolence (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1695668143849975228, guid: 69fcd1a347342834582028b64aa43389, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69fcd1a347342834582028b64aa43389, type: 3}

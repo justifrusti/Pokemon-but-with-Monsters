@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
             enemiesToSpawn = Random.Range(2, 4);
         }
 
-        if(spawnableEnemies.Count == 1)
+        if(spawnableEnemies.Count <= 1)
         {
             int spawnPointIndex = Random.Range(0, spawnPoints.Count);
 

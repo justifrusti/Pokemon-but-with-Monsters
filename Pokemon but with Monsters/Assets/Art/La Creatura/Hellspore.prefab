@@ -176,6 +176,8 @@ MonoBehaviour:
     type: 3}
   bulletPoint: {fileID: 2731241103940421968}
   bulletRotPoint: {fileID: 7386537647668648579}
+  deathParticle: {fileID: 1998807275026536646, guid: 4aa2c19eb7b44bc47a6b5964c4006a07,
+    type: 3}
   roamingPoints: []
   aggroPoints: []
   navMeshBuild: 0
@@ -270,7 +272,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.25
+  m_Radius: 0.5
   m_Center: {x: 0, y: 1.5, z: 0}
 --- !u!1001 &5396626734776174715
 PrefabInstance:

@@ -75,6 +75,8 @@ public class PlayerController : MonoBehaviour
     [Space]
     public Slider hpBar;
 
+    public GameObject blackAndWhite;
+
     //Privates
     private Rigidbody rb;
     private float speed;
@@ -184,6 +186,17 @@ public class PlayerController : MonoBehaviour
             AudioManager.instance.StopClip("Violence");
 
             SceneManager.LoadScene(lvlToLoad);
+        }
+
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            if(blackAndWhite.activeInHierarchy)
+            {
+                blackAndWhite.SetActive(false);
+            }else
+            {
+                blackAndWhite.SetActive(true);
+            }
         }
 
         if(playerControlData.canLean && !isLookingAtInteractable)
@@ -730,7 +743,7 @@ public class PlayerController : MonoBehaviour
         
     public void SaveData()
     {
-        GameManager.instance.saveData.maxHP = maxHP;
+        GameManager.instance.saveData.maxHP = currentHP;
 
         GameManager.instance.Save();
     }
@@ -739,7 +752,8 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.instance.Load();
 
-        maxHP = GameManager.instance.saveData.maxHP;
+        currentHP = GameManager.instance.saveData.maxHP;
+        hpBar.value = currentHP;
     }
 
     public void Initialize()

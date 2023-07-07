@@ -9,4 +9,5 @@ public class ItemManager : MonoBehaviour
     public Item orb;
 
     public int ammountOfItems = 0;
+    public int ammountToSpawn = 4;
 }

@@ -963,7 +963,8 @@ PrefabInstance:
       value: WallViolence (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 856809498507964436, guid: 69fcd1a347342834582028b64aa43389, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69fcd1a347342834582028b64aa43389, type: 3}
@@ -1232,7 +1233,8 @@ PrefabInstance:
       value: WallViolence (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 856809498507964436, guid: 69fcd1a347342834582028b64aa43389, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69fcd1a347342834582028b64aa43389, type: 3}

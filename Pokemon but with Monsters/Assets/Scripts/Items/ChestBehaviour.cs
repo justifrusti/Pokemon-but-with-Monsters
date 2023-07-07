@@ -34,7 +34,7 @@ public class ChestBehaviour : MonoBehaviour
         switch(chestType)
         {
             case ChestType.Area:
-                if (itemManager.items.Count != 0 && itemManager.ammountOfItems < 4)
+                if (itemManager.items.Count != 0 && itemManager.ammountOfItems < itemManager.ammountToSpawn)
                 {
                     if(Random.value < .05f)
                     {
