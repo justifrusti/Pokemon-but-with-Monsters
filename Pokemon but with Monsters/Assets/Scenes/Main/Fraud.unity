@@ -1416,6 +1416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f68525b9b4c174abf3d313796c9ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLusty: 0
   generationState: 0
   generatorPosition: {fileID: 288964675}
   size: {x: 15, y: 15}
@@ -8186,10 +8187,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b715218da22494644bf3650af29b1ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnableEnemies:
-  - {fileID: 4494238080386722216, guid: 61764de986163304abba5ff6db7eb15e, type: 3}
-  - {fileID: 2833490866472392137, guid: 56495495cb06385439cc3037511f10b1, type: 3}
-  singleEnemySpawn: {fileID: 0}
+  spawnableEnemies: []
+  singleEnemySpawn: {fileID: 2833490866472392137, guid: 56495495cb06385439cc3037511f10b1,
+    type: 3}
   spawnPoints: []
 --- !u!114 &1816254020
 MonoBehaviour:
@@ -8226,7 +8226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   manager: {fileID: 0}
-  audioToPlay: CaveAmbience
+  audioToPlay: Fraud
 --- !u!114 &1816254022
 MonoBehaviour:
   m_ObjectHideFlags: 0

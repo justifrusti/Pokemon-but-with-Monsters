@@ -8898,6 +8898,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 28fcb79f074a1d648bf9bbf2bc296ba1, type: 2}
   - {fileID: 11400000, guid: 3a375ea3eb964084e9c56c10e9b49837, type: 2}
   - {fileID: 11400000, guid: af4d678900d40d442aeaee175b046259, type: 2}
+  - {fileID: 11400000, guid: b66aa5affe84a694eae3de49bbbd13b4, type: 2}
+  - {fileID: 11400000, guid: 4062a6d74676ab7468608d4235299489, type: 2}
+  - {fileID: 11400000, guid: 1da83f134a92d6c4d8d3bb4bc66d5c69, type: 2}
 --- !u!4 &1766184226
 Transform:
   m_ObjectHideFlags: 0
@@ -8935,28 +8938,7 @@ MonoBehaviour:
     isFullscreen: 1
     vSync: 0
     continueLvl: Limbo
-    walkSpeed: 5
-    runSpeed: 10
-    sensitivity: 180
-    turnSpeed: 240
-    jumpForce: 5
-    pickupRange: 1
     maxHP: 100
-    currentHP: 100
-    invisFrameTime: 1.2
-    leanAngle: 20
-    leanSpeed: 10
-    crouchHeight: 0.5
-    crouchSpeed: 10
-    invItem1: {fileID: 0}
-    invItem2: {fileID: 0}
-    invItem3: {fileID: 0}
-    i1s: {fileID: 0}
-    i2s: {fileID: 0}
-    i3s: {fileID: 0}
-    amuletHPBoost: 0
-    amuletSpeedBoost: 0
-    amuletStealthBoost: 0
   pc: {fileID: 0}
 --- !u!1 &1800469695
 GameObject:

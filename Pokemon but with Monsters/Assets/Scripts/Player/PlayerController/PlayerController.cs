@@ -166,6 +166,9 @@ public class PlayerController : MonoBehaviour
 
             AudioManager.instance.StopClip("CaveAmbience");
             AudioManager.instance.StopClip("LustAmbience");
+            AudioManager.instance.StopClip("Anger");
+            AudioManager.instance.StopClip("Fraud");
+            AudioManager.instance.StopClip("Violence");
 
             SceneManager.LoadScene("Limbo");
         }
@@ -173,6 +176,12 @@ public class PlayerController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Z))
         {
             SaveData();
+
+            AudioManager.instance.StopClip("CaveAmbience");
+            AudioManager.instance.StopClip("LustAmbience");
+            AudioManager.instance.StopClip("Anger");
+            AudioManager.instance.StopClip("Fraud");
+            AudioManager.instance.StopClip("Violence");
 
             SceneManager.LoadScene(lvlToLoad);
         }

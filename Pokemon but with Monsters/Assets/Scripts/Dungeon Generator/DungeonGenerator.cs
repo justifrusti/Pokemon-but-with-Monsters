@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class DungeonGenerator : MonoBehaviour
 {
+    public bool isLusty;
+
     public enum GenerationState { Setup, Generating, Finished, Disabled };
     public GenerationState generationState;
 
@@ -292,11 +294,20 @@ public class DungeonGenerator : MonoBehaviour
                     if (board[currentCell - size.x].visited)
                     {
                         board[currentCell].status[up] = true;
-                        board[currentCell - size.x].status[down] = true;
-                    }else if (board[currentCell - 1].visited)
+
+                        if (!isLusty)
+                        {
+                            board[currentCell].status[down] = true;
+                        }
+                    }
+                    else if (board[currentCell - 1].visited)
                     {
                         board[currentCell].status[left] = true;
-                        board[currentCell - 1].status[right] = true;
+                        
+                        if (!isLusty)
+                        {
+                            board[currentCell].status[right] = true;
+                        }
                     }
                     break;
                 }
@@ -312,7 +323,11 @@ public class DungeonGenerator : MonoBehaviour
                         {
                             board[currentCell].status[right] = true;
                             currentCell = newCell;
-                            board[currentCell].status[left] = true;
+                            
+                            if(!isLusty)
+                            {
+                                board[currentCell].status[left] = true;
+                            }
                         }
                     }
                     else
@@ -321,7 +336,11 @@ public class DungeonGenerator : MonoBehaviour
                         {
                             board[currentCell].status[down] = true;
                             currentCell = newCell;
-                            board[currentCell].status[up] = true;
+
+                            if (!isLusty)
+                            {
+                                board[currentCell].status[up] = true;
+                            }
                         }
                     }
                 }

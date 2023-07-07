@@ -60,6 +60,7 @@ public class EnemyBehaviour : MonoBehaviour
     [Space]
     public Transform bulletPoint;
     [Tooltip("The point the bulletpoint rotates around for 360 degrees shooting")]public Transform bulletRotPoint;
+    public GameObject deathParticle;
 
     [HideInInspector] public List<Transform> roamingPoints;
     [HideInInspector] public List<Transform> aggroPoints;
@@ -330,6 +331,19 @@ public class EnemyBehaviour : MonoBehaviour
     }
 
     void Die()
+    {
+        if(behaviour == Enemy.Hellspore)
+        {
+            Instantiate(deathParticle, transform.position, Quaternion.identity);
+
+            Invoke("DestroyInTime", .1f);
+        }else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    void DestroyInTime()
     {
         Destroy(gameObject);
     }

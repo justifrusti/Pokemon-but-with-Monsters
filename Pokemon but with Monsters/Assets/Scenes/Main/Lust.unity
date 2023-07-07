@@ -1396,6 +1396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f68525b9b4c174abf3d313796c9ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLusty: 0
   generationState: 0
   generatorPosition: {fileID: 404278948}
   size: {x: 15, y: 15}
@@ -8701,8 +8702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b715218da22494644bf3650af29b1ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnableEnemies:
-  - {fileID: 2833490866472392137, guid: 56495495cb06385439cc3037511f10b1, type: 3}
+  spawnableEnemies: []
   singleEnemySpawn: {fileID: 2833490866472392137, guid: 56495495cb06385439cc3037511f10b1,
     type: 3}
   spawnPoints: []
