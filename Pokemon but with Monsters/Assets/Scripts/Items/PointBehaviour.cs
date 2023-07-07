@@ -8,7 +8,7 @@ public class PointBehaviour : MonoBehaviour
 
     void Start()
     {
-        if(Random.value > .3f)
+        if(Random.value > .5f)
         {
             int index = Random.Range(0, possibleItems.Length);
 

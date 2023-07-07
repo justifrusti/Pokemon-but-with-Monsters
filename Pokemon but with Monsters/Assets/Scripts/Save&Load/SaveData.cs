@@ -10,45 +10,21 @@ using static PlayerController;
 public class SaveData
 {
     [Header("Settings")]
-    public int width;
-    public int height;
+    public int width = 1920;
+    public int height = 1080;
     public int resolutionIndex;
     [Space]
-    public float masterVolume;
-    public float musicVolume;
-    public float sfxVolume;
+    public float masterVolume = 1;
+    public float musicVolume = 1;
+    public float sfxVolume = 1;
     [Space]
-    public bool isFullscreen;
-    public bool vSync;
+    public bool isFullscreen = true;
+    public bool vSync = false;
     [Space]
     public string continueLvl;
 
-    //Player Stuff
-    [Header("Movement")]
-    public float walkSpeed = 5f;
-    public float runSpeed = 10f;
-    public float sensitivity = 180f;
-    public float turnSpeed = 240f;
-
-    [Header("Jump")]
-    public float jumpForce = 5f;
-
-    [Header("Interact")]
-    public float pickupRange = 1.0f;
-
     [Header("Health")]
-    public int maxHP;
-    public int currentHP;
-    [Space]
-    public float invisFrameTime = 1.2f;
-
-    [Header("Leaning")]
-    public float leanAngle = 20f;
-    public float leanSpeed = 10f;
-
-    [Header("Crouching")]
-    public float crouchHeight = 0.5f;
-    public float crouchSpeed = 10f;
+    public int maxHP = 100;
 
     [Header("Inventory")]
     public Item invItem1;
@@ -58,9 +34,4 @@ public class SaveData
     public Sprite i1s;
     public Sprite i2s;
     public Sprite i3s;
-
-    [Header("AmuletStats")]
-    public int amuletHPBoost;
-    public float amuletSpeedBoost;
-    public float amuletStealthBoost;
 }

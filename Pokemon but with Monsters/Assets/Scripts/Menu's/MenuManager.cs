@@ -37,6 +37,8 @@ public class MenuManager : MonoBehaviour
     public Slider musicVolS;
     public Slider sfxVolS;
 
+    public static MenuManager instance;
+
     private void Start()
     {
         if(includeSettings)
@@ -112,23 +114,15 @@ public class MenuManager : MonoBehaviour
     public void GetResolutions()
     {
         resolutions = Screen.resolutions;
+
         resolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
-
         int currentResolutionIndex = 0;
-
         for (int i = 0; i < resolutions.Length; i++)
         {
-            string option = resolutions[i].width + "x" + resolutions[i].height;
-
-            if (resolutions[i].width >= 854)
-            {
-                if (!options.Contains(option))
-                {
-                    options.Add(option);
-                }
-            }
+            string option = resolutions[i].width + " x " + resolutions[i].height;
+            options.Add(option);
 
             if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
             {
@@ -139,6 +133,7 @@ public class MenuManager : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
+
     }
 
     public void LoadLevel(string levelName)
@@ -191,7 +186,5 @@ public class MenuManager : MonoBehaviour
         masterVolS.value = masterVolume;
         musicVolS.value = musicVolume;
         sfxVolS.value = sfxVolume;
-
-        SetResolution(resolutionIndex);
     }
 }

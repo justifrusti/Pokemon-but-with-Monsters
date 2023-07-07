@@ -71,6 +71,7 @@ public class PlayerController : MonoBehaviour
     [Header("UI")]
     public GameObject minimapUI;
     public GameObject pauseMenu;
+    public GameObject gameOverUI;
     [Space]
     public Slider hpBar;
 
@@ -90,6 +91,7 @@ public class PlayerController : MonoBehaviour
     private bool canInvokeInvisReset = true;
     private float originalTimescale;
     private float originalSensitivity;
+    private bool hasDied = false;
 
     [HideInInspector] public bool hasHealthAmulet;
     [HideInInspector] public bool hasSpeedAmulet;
@@ -156,6 +158,23 @@ public class PlayerController : MonoBehaviour
         if(moveType != MoveType.Die)
         {
             CheckSpeed();
+        }
+
+        if(hasDied && Input.GetKeyDown(KeyCode.R))
+        {
+            SaveManager.DeleteData();
+
+            AudioManager.instance.StopClip("CaveAmbience");
+            AudioManager.instance.StopClip("LustAmbience");
+
+            SceneManager.LoadScene("Limbo");
+        }
+
+        if(Input.GetKeyDown(KeyCode.Z))
+        {
+            SaveData();
+
+            SceneManager.LoadScene(lvlToLoad);
         }
 
         if(playerControlData.canLean && !isLookingAtInteractable)
@@ -596,6 +615,9 @@ public class PlayerController : MonoBehaviour
         moveType = MoveType.Die;
 
         minimapUI.SetActive(false);
+        gameOverUI.SetActive(true);
+
+        hasDied = true;
 
         rb.constraints = RigidbodyConstraints.None;
         rb.velocity = Vector3.zero;
@@ -699,19 +721,7 @@ public class PlayerController : MonoBehaviour
         
     public void SaveData()
     {
-        GameManager.instance.saveData.walkSpeed = walkSpeed;
-        GameManager.instance.saveData.runSpeed = runSpeed;
-        GameManager.instance.saveData.sensitivity = sensitivity;
-        GameManager.instance.saveData.turnSpeed = turnSpeed;
-        GameManager.instance.saveData.jumpForce = jumpForce;
-        GameManager.instance.saveData.pickupRange = pickupRange;
         GameManager.instance.saveData.maxHP = maxHP;
-        GameManager.instance.saveData.currentHP = currentHP;
-        GameManager.instance.saveData.invisFrameTime = invisFrameTime;
-        GameManager.instance.saveData.leanAngle = leanAngle;
-        GameManager.instance.saveData.leanSpeed = leanSpeed;
-        GameManager.instance.saveData.crouchHeight = crouchHeight;
-        GameManager.instance.saveData.crouchSpeed = crouchSpeed;
 
         GameManager.instance.saveData.invItem1 = invSlots[0].currentItem;
         GameManager.instance.saveData.invItem2 = invSlots[1].currentItem;
@@ -721,10 +731,6 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.saveData.i2s = invSlots[1].sprite;
         GameManager.instance.saveData.i3s = invSlots[2].sprite;
 
-        GameManager.instance.saveData.amuletHPBoost = amuletHPBoost;
-        GameManager.instance.saveData.amuletSpeedBoost = amuletSpeedBoost;
-        GameManager.instance.saveData.amuletStealthBoost = amuletStealthBoost;
-
         GameManager.instance.Save();
     }
 
@@ -732,19 +738,7 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.instance.Load();
 
-        walkSpeed = GameManager.instance.saveData.walkSpeed;
-        runSpeed = GameManager.instance.saveData.runSpeed;
-        sensitivity = GameManager.instance.saveData.sensitivity;
-        turnSpeed = GameManager.instance.saveData.turnSpeed;
-        jumpForce = GameManager.instance.saveData.jumpForce;
-        pickupRange = GameManager.instance.saveData.pickupRange;
         maxHP = GameManager.instance.saveData.maxHP;
-        currentHP = GameManager.instance.saveData.currentHP;
-        invisFrameTime = GameManager.instance.saveData.invisFrameTime;
-        leanAngle = GameManager.instance.saveData.leanAngle;
-        leanSpeed = GameManager.instance.saveData.leanSpeed;
-        crouchHeight = GameManager.instance.saveData.crouchHeight;
-        crouchSpeed = GameManager.instance.saveData.crouchSpeed;
 
         invSlots[0].currentItem = GameManager.instance.saveData.invItem1;
         invSlots[1].currentItem = GameManager.instance.saveData.invItem2;
@@ -753,10 +747,6 @@ public class PlayerController : MonoBehaviour
         invSlots[0].sprite = GameManager.instance.saveData.i1s;
         invSlots[1].sprite = GameManager.instance.saveData.i2s;
         invSlots[2].sprite = GameManager.instance.saveData.i3s;
-
-        amuletHPBoost = GameManager.instance.saveData.amuletHPBoost;
-        amuletSpeedBoost = GameManager.instance.saveData.amuletSpeedBoost;
-        amuletStealthBoost = GameManager.instance.saveData.amuletStealthBoost;
     }
 
     public void Initialize()

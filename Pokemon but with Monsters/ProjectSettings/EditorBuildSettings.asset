@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main/Limbo.unity
     guid: a7b84060c36d82e448556af6a9e721d3
+  - enabled: 1
+    path: Assets/Scenes/Main/Anger.unity
+    guid: e9a397779b1635246a6f7ed09e4b2d43
+  - enabled: 1
+    path: Assets/Scenes/Main/Violence.unity
+    guid: 49c9d34d14cd7fb4c9258275213ec812
+  - enabled: 1
+    path: Assets/Scenes/Main/Fraud.unity
+    guid: d470f711fc39f7f48880b9718d4ea20d
   m_configObjects: {}

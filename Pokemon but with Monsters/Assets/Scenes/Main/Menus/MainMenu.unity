@@ -2695,8 +2695,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Inferno
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3665,7 +3665,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1766184225}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: Delete
         m_Mode: 1
@@ -6476,7 +6476,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.5
+  m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -8872,7 +8872,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1766184226}
-  - component: {fileID: 1766184225}
+  - component: {fileID: 1766184227}
   - component: {fileID: 1766184224}
   m_Layer: 0
   m_Name: GameManager
@@ -8898,48 +8898,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 28fcb79f074a1d648bf9bbf2bc296ba1, type: 2}
   - {fileID: 11400000, guid: 3a375ea3eb964084e9c56c10e9b49837, type: 2}
   - {fileID: 11400000, guid: af4d678900d40d442aeaee175b046259, type: 2}
---- !u!114 &1766184225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1766184223}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c469499f5cf9e479544722212182bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saveData:
-    width: 0
-    height: 0
-    resolutionIndex: 0
-    masterVolume: 0
-    musicVolume: 0
-    sfxVolume: 0
-    isFullscreen: 0
-    vSync: 0
-    continueLvl: 
-    walkSpeed: 5
-    runSpeed: 10
-    sensitivity: 180
-    turnSpeed: 240
-    jumpForce: 5
-    pickupRange: 1
-    maxHP: 0
-    currentHP: 0
-    invisFrameTime: 1.2
-    leanAngle: 20
-    leanSpeed: 10
-    crouchHeight: 0.5
-    crouchSpeed: 10
-    invItem1: {fileID: 0}
-    invItem2: {fileID: 0}
-    invItem3: {fileID: 0}
-    amuletHPBoost: 0
-    amuletSpeedBoost: 0
-    amuletStealthBoost: 0
-  pc: {fileID: 0}
 --- !u!4 &1766184226
 Transform:
   m_ObjectHideFlags: 0
@@ -8955,6 +8913,51 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1766184227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1766184223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81c469499f5cf9e479544722212182bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveData:
+    width: 1920
+    height: 1080
+    resolutionIndex: 0
+    masterVolume: 1
+    musicVolume: 1
+    sfxVolume: 1
+    isFullscreen: 1
+    vSync: 0
+    continueLvl: Limbo
+    walkSpeed: 5
+    runSpeed: 10
+    sensitivity: 180
+    turnSpeed: 240
+    jumpForce: 5
+    pickupRange: 1
+    maxHP: 100
+    currentHP: 100
+    invisFrameTime: 1.2
+    leanAngle: 20
+    leanSpeed: 10
+    crouchHeight: 0.5
+    crouchSpeed: 10
+    invItem1: {fileID: 0}
+    invItem2: {fileID: 0}
+    invItem3: {fileID: 0}
+    i1s: {fileID: 0}
+    i2s: {fileID: 0}
+    i3s: {fileID: 0}
+    amuletHPBoost: 0
+    amuletSpeedBoost: 0
+    amuletStealthBoost: 0
+  pc: {fileID: 0}
 --- !u!1 &1800469695
 GameObject:
   m_ObjectHideFlags: 0

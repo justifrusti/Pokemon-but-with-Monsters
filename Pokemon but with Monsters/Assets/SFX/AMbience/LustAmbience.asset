@@ -18,5 +18,5 @@ MonoBehaviour:
   group: {fileID: -3752375160622021651, guid: f59d9b19c9e6e2946a6a4f9389caac22, type: 2}
   volume: 1
   pitch: 1
-  loop: 0
+  loop: 1
   playOnAwake: 0
